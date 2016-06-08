@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="2dp"
+              android:layout_marginLeft="1dp"
+              android:layout_marginRight="1dp"
+              android:orientation="vertical">
+
+    <yyl.yungirl.widget.MyImageView
+        android:id="@+id/iv_meizhi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"/>
+
+</LinearLayout>
