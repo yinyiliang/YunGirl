@@ -3,7 +3,9 @@ package yyl.yungirl.ui.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.annotation.CheckResult;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -27,19 +29,20 @@ import yyl.yungirl.data.MeizhiData;
 import yyl.yungirl.presenter.MeizhiListPresenter;
 import yyl.yungirl.ui.view.IMeizhiListView;
 
-public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>
-        implements IMeizhiListView<Meizhi> {
+public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter> implements IMeizhiListView<Meizhi> {
 
     private GridLayoutManager layoutManager;
 
     private MeizhiListPresenter mPresenter;
+
+    //是不是第一次到底
+    private boolean isFirstTimeTouchBottom = true;
 
     private RecyclerView mRecyclerView;
     private MeizhiAdapter mAdapter;
     private List<Meizhi> mMeizhiList;
 
     private int mPage = 1;
-
 
     @Override
     protected int getLayout() {
@@ -49,19 +52,54 @@ public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("福利",true);
+        setTitle("福利", true);
         initData();
         initRecyclerView();
-        loadData();
 
     }
 
+    //初始化数据
+    private void initData() {
+        mPresenter = new MeizhiListPresenter(this);
+        mMeizhiList = new ArrayList<>();
+        mPresenter.attachView(this);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setRefresh(true);
+            }
+        }, 358);
+        loadData();
+    }
+
+    //初始化RecyclerView，以及给每个Item添加点击事件、滑动设置
     private void initRecyclerView() {
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        layoutManager = new GridLayoutManager(this,2);
+        layoutManager = new GridLayoutManager(this, 2);
         mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new MeizhiAdapter(mMeizhiList,this);
+        mAdapter = new MeizhiAdapter(mMeizhiList, this);
         mRecyclerView.setAdapter(mAdapter);
+        //给每个Item设置点击动画
+        mAdapter.setOnItemClickListener(new MeizhiAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(final View view, int positon) {
+                view.animate()
+                        .translationZ(20F)
+                        .setDuration(300)
+                        .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        view.animate().translationZ(1f).setDuration(500).start();
+                    }
+                }).start();
+            }
+        });
 
         //设置加载更多时，不用等到数据到底了才加载，给用户一个良好的体验
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -71,32 +109,17 @@ public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>
                 boolean isBottom = layoutManager.findLastCompletelyVisibleItemPosition()
                         >= mAdapter.getItemCount() - 4;
                 if (!mSwipeRefreshLayout.isRefreshing() && isBottom) {
-                    //显示刷新控件
-                    showRefresh();
-                    loadData();
+                    if (!isFirstTimeTouchBottom) {
+                        mSwipeRefreshLayout.setRefreshing(true);
+                        mPage += 1;
+                        loadData();
+                    } else {
+                        isFirstTimeTouchBottom = false;
+                    }
                 }
             }
         });
 
-
-        //给每个Item设置点击动画
-        mAdapter.setItemClickListener(new MeizhiAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(final View view, int positon) {
-                view.animate()
-                        .translationZ(20F).setDuration(300)
-                        .setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                super.onAnimationEnd(animation);
-                                view.animate()
-                                        .translationZ(1f)
-                                        .setDuration(500)
-                                        .start();
-                            }
-                        }).start();
-            }
-        });
     }
 
     /**
@@ -104,49 +127,21 @@ public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>
      */
     private void loadData() {
         mPresenter.loadData(mPage);
-        mPage++;
     }
 
     /**
-     * 初始化数据
-     */
-    private void initData() {
-        mMeizhiList = new ArrayList<>();
-
-        mPresenter = new MeizhiListPresenter(this);
-
-        mPresenter.attachView(this);
-    }
-
-    /**
-     *  是否准备好刷新
-     * @return
-     */
-    @Override @CheckResult
-    protected boolean prepareRefresh() {
-        if (mPage <= 2) {
-            mPage = 1;
-            if (!isRefreshing()) {
-                showRefresh();
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * 刷新是否开始
+     * 重新加载数据
      */
     @Override
-    protected void onRefreshStarted() {
+    public void requestDataRefresh() {
+        super.requestDataRefresh();
         mPage = 1;
         loadData();
     }
 
-
     /**
-     *  刷新数据
+     * 刷新数据
+     *
      * @param data
      */
     @Override
@@ -158,6 +153,7 @@ public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>
 
     /**
      * 加载更多数据
+     *
      * @param data
      */
     @Override
@@ -171,22 +167,20 @@ public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>
      */
     @Override
     public void showEmpty() {
-        Snackbar.make(mRecyclerView,"妹子还在化妆~~o(>_<)o",Snackbar.LENGTH_INDEFINITE).show();
+        Snackbar.make(mRecyclerView, "妹子还在化妆~~o(>_<)o", Snackbar.LENGTH_INDEFINITE).show();
     }
 
     /**
      * 数据加载失败显示
+     *
      * @param throwable
      */
     @Override
-    public void showFailError(Throwable throwable) {
-        final Snackbar errorSnackbar = Snackbar.make(mRecyclerView,"无法加载数据，请检查网络是否连接，再点击重试！",
-                Snackbar.LENGTH_INDEFINITE);
-        errorSnackbar.getView().setOnClickListener(new View.OnClickListener() {
+    public void showNetError(Throwable throwable) {
+        final Snackbar errorSnackbar = Snackbar.make(mRecyclerView, "无法加载数据，请检查网络是否连接，再点击重试！", Snackbar.LENGTH_INDEFINITE).setAction("重试", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                errorSnackbar.dismiss();
-                onRefreshStarted();
+                requestDataRefresh();
             }
         });
         errorSnackbar.show();

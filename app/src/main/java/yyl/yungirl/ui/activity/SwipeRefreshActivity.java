@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.CheckResult;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 
 import yyl.yungirl.R;
 import yyl.yungirl.presenter.BasePresenter;
@@ -16,12 +17,16 @@ import yyl.yungirl.ui.view.SwipeRefreshView;
 public abstract class SwipeRefreshActivity<P extends BasePresenter> extends BaseActivity<P>
         implements SwipeRefreshView {
 
+    private boolean mIsRequestDataRefresh = false;
+
     protected SwipeRefreshLayout mSwipeRefreshLayout;
+    protected RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.id_swipe_refresh_layout);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         initSwipeRefreshLayout();
     }
 
@@ -35,44 +40,36 @@ public abstract class SwipeRefreshActivity<P extends BasePresenter> extends Base
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (prepareRefresh()) {
-                    onRefreshStarted();
-                } else {
-                    hideRefresh();
-                }
+                requestDataRefresh();
             }
         });
     }
 
-    protected boolean prepareRefresh(){return true;}
-
-    protected abstract void onRefreshStarted();
-
+    /**
+     * 请求数据刷新
+     */
     @Override
-    public void showRefresh() {
-        mSwipeRefreshLayout.setRefreshing(true);
+    public void requestDataRefresh() {
+        mIsRequestDataRefresh = true;
     }
 
-    @CheckResult
-    protected boolean isRefreshing(){
-        return mSwipeRefreshLayout.isRefreshing();
-    }
-
-    @Override
-    public void hideRefresh() {
-        // 防止刷新消失太快，让子弹飞一会儿
-        mSwipeRefreshLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (mSwipeRefreshLayout != null) {
-                    mSwipeRefreshLayout.setRefreshing(false);
+    //设置刷新效果
+    public void setRefresh(boolean requestDataRefresh) {
+        if (mSwipeRefreshLayout == null) {
+            return;
+        }
+        if (!requestDataRefresh) {
+            mIsRequestDataRefresh = false;
+            // 防止刷新消失太快，让子弹飞一会儿.
+            mSwipeRefreshLayout.postDelayed(new Runnable() {
+                @Override public void run() {
+                    if (mSwipeRefreshLayout != null) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
                 }
-            }
-        },1000);
-    }
-
-    @Override
-    public void getDataFinish() {
-        hideRefresh();
+            }, 1000);
+        } else {
+            mSwipeRefreshLayout.setRefreshing(true);
+        }
     }
 }

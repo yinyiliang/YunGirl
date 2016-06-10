@@ -37,6 +37,10 @@ public class MeizhiListPresenter extends BasePresenter<IMeizhiListView> {
         super.detachView();
     }
 
+    /**
+     *  加载服务器数据
+     * @param page
+     */
     public void loadData(final int page) {
         YunRetrofit.getRetrofit().getGankService().getMeizhiData(page)
                 .subscribeOn(Schedulers.io())
@@ -55,20 +59,22 @@ public class MeizhiListPresenter extends BasePresenter<IMeizhiListView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        getMvpView().showFailError(e);
+                        getMvpView().showNetError(e);
                     }
 
                     @Override
                     public void onNext(List<Meizhi> meizhis) {
-
-                           if (page == 1) {
-                               getMvpView().refreshData(meizhis);
-                           } else {
-                               getMvpView().loadMoreData(meizhis);
-                           }
-                           mMeizhiList.addAll(meizhis);
+                       if (meizhis.isEmpty()) {
+                           getMvpView().showEmpty();
                        }
-
+                        if (page == 1) {
+                            getMvpView().refreshData(meizhis);
+                       } else {
+                            getMvpView().loadMoreData(meizhis);
+                        }
+                        getMvpView().setRefresh(false);
+                        mMeizhiList.addAll(meizhis);
+                    }
                 });
     }
 }

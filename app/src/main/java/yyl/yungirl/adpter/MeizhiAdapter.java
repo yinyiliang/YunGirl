@@ -27,15 +27,15 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.ViewHolder
         this.mContext = mContext;
     }
 
-    private OnItemClickListener itemClickListener;
+    public OnItemClickListener itemClickListener;
 
     //暴露一个方法给外界调用
-    public void setItemClickListener(OnItemClickListener itemClickListener) {
+    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
     public interface OnItemClickListener {
-        void onItemClick(View view,int positon);
+        void onItemClick(View view,int position);
     }
 
     @Override
@@ -72,6 +72,7 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.ViewHolder
             super(itemView);
             meizhiView = (MyImageView) itemView.findViewById(R.id.iv_meizhi);
             meizhiView.setCustomSize(50,50);
+            meizhiView.setOnClickListener(this);
         }
 
         @Override
