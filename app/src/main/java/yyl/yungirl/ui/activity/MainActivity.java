@@ -116,6 +116,9 @@ public class MainActivity extends SwipeRefreshActivity<DailyGankPresenter>
         }
     }
 
+    /**
+     * 返回键回调
+     */
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
