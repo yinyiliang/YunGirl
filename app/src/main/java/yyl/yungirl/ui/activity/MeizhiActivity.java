@@ -167,7 +167,7 @@ public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter> im
      */
     @Override
     public void showEmpty() {
-        Snackbar.make(mRecyclerView, "妹子还在化妆~~o(>_<)o", Snackbar.LENGTH_INDEFINITE).show();
+        showSnackbar(mRecyclerView,"妹子还在化妆~~o(>_<)o");
     }
 
     /**
@@ -193,5 +193,10 @@ public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter> im
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.detachView();
+    }
+
+    @Override
+    public void showSnackbar(View view, String s) {
+        Snackbar.make(view, s, Snackbar.LENGTH_INDEFINITE).show();
     }
 }

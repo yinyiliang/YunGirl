@@ -1,7 +1,7 @@
 package yyl.yungirl.data.bean;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 
 import yyl.yungirl.widget.DailyGankType;
 
@@ -13,7 +13,7 @@ public class Gank extends Soul implements Cloneable,Serializable {
     public String _id;
     public String createdAt;
     public String desc;
-    public String publishedAt;
+    public Date publishedAt;
     public String source;
     public String type;
     public String url;

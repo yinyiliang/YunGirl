@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +32,9 @@ import yyl.yungirl.widget.YunFactory;
 public class MainActivity extends SwipeRefreshActivity<DailyGankPresenter>
         implements IDailyView<Gank>,NavigationView.OnNavigationItemSelectedListener {
 
+    private DrawerLayout drawer;
+    private Toolbar toolbar;
+
     private DailyGankPresenter mPresenter;
 
     private DailyGankAdapter mAdapter;
@@ -38,6 +42,8 @@ public class MainActivity extends SwipeRefreshActivity<DailyGankPresenter>
     private List<Gank> mGankList;
 
     private Date mCurrentDate;
+
+    private long exitTime = 0; ////记录第一次点击的时间
 
     @Override
     protected int getLayout() {
@@ -49,6 +55,7 @@ public class MainActivity extends SwipeRefreshActivity<DailyGankPresenter>
         super.onCreate(savedInstanceState);
         initDatas();
         initViews();
+        initDrawer();
     }
 
     @Override
@@ -68,18 +75,19 @@ public class MainActivity extends SwipeRefreshActivity<DailyGankPresenter>
      */
     private void initDatas(){
         mGankList = new ArrayList<>();
-
         mPresenter = new DailyGankPresenter(this);
-
         mCurrentDate = new Date(System.currentTimeMillis());
     }
 
+    /**
+     * 从服务器加载数据
+     */
     private void getData() {
         mPresenter.getDailyData(mCurrentDate);
     }
 
     /**
-     * 初始化界面
+     * 初始化主页面
      */
     private void initViews(){
         setTitle("每日资源",false);
@@ -89,22 +97,27 @@ public class MainActivity extends SwipeRefreshActivity<DailyGankPresenter>
         mAdapter = new DailyGankAdapter(this,mGankList);
         mRecyclerView.setAdapter(mAdapter);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
 
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
+    /**
+     * 初始化抽屉
+     */
+    private void initDrawer() {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        if (navigationView != null) {
+            navigationView.setNavigationItemSelectedListener(this);
+            drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+            assert drawer != null;
+            drawer.addDrawerListener(toggle);
+            toggle.syncState();
+        }
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -114,27 +127,24 @@ public class MainActivity extends SwipeRefreshActivity<DailyGankPresenter>
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case R.id.action_left:
+                mCurrentDate = new Date(mCurrentDate.getTime() + YunFactory.ONE_DAY_TIME);
+                getData();
+                break;
+            case  R.id.action_right:
+                mCurrentDate = new Date(mCurrentDate.getTime() - YunFactory.ONE_DAY_TIME);
+                getData();
+                break;
+            default:
+                break;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_left) {
-            mCurrentDate = new Date(mCurrentDate.getTime() + YunFactory.ONE_DAY_TIME);
-            getData();
-            return true;
-        } else if (id == R.id.action_right){
-            mCurrentDate = new Date(mCurrentDate.getTime() - YunFactory.ONE_DAY_TIME);
-            getData();
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -147,11 +157,8 @@ public class MainActivity extends SwipeRefreshActivity<DailyGankPresenter>
             switch (id) {
                 case R.id.nav_fuli:
                     startActivity(new Intent(MainActivity.this,MeizhiActivity.class));
-                    default:
-                        break;
+                    break;
             }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -199,5 +206,10 @@ public class MainActivity extends SwipeRefreshActivity<DailyGankPresenter>
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.detachView();
+    }
+
+    @Override
+    public void showSnackbar(View view, String s) {
+
     }
 }
