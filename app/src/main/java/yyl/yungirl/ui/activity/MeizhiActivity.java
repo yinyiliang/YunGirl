@@ -130,16 +130,6 @@ public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter> im
     }
 
     /**
-     * 重新加载数据
-     */
-    @Override
-    public void requestDataRefresh() {
-        super.requestDataRefresh();
-        mPage = 1;
-        loadData();
-    }
-
-    /**
      * 刷新数据
      *
      * @param data
@@ -160,6 +150,16 @@ public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter> im
     public void loadMoreData(List<Meizhi> data) {
         mMeizhiList.addAll(data);
         mAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 重新加载数据
+     */
+    @Override
+    public void requestDataRefresh() {
+        super.requestDataRefresh();
+        mPage = 1;
+        loadData();
     }
 
     /**

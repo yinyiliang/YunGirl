@@ -2,18 +2,42 @@ package yyl.yungirl.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import yyl.yungirl.R;
+import yyl.yungirl.adpter.DailyGankAdapter;
+import yyl.yungirl.data.bean.Gank;
+import yyl.yungirl.presenter.DailyGankPresenter;
+import yyl.yungirl.ui.view.IDailyView;
+import yyl.yungirl.widget.YunFactory;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends SwipeRefreshActivity<DailyGankPresenter>
+        implements IDailyView<Gank>,NavigationView.OnNavigationItemSelectedListener {
+
+    private DailyGankPresenter mPresenter;
+
+    private DailyGankAdapter mAdapter;
+    private RecyclerView mRecyclerView;
+    private List<Gank> mGankList;
+
+    private Date mCurrentDate;
 
     @Override
     protected int getLayout() {
@@ -23,6 +47,48 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initDatas();
+        initViews();
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setRefresh(true);
+            }
+        }, 358);
+        getData();
+    }
+
+    /**
+     * 初始化数据
+     */
+    private void initDatas(){
+        mGankList = new ArrayList<>();
+
+        mPresenter = new DailyGankPresenter(this);
+
+        mCurrentDate = new Date(System.currentTimeMillis());
+    }
+
+    private void getData() {
+        mPresenter.getDailyData(mCurrentDate);
+    }
+
+    /**
+     * 初始化界面
+     */
+    private void initViews(){
+        setTitle("每日资源",false);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mAdapter = new DailyGankAdapter(this,mGankList);
+        mRecyclerView.setAdapter(mAdapter);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -61,10 +127,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_left) {
+            mCurrentDate = new Date(mCurrentDate.getTime() + YunFactory.ONE_DAY_TIME);
+            getData();
+            return true;
+        } else if (id == R.id.action_right){
+            mCurrentDate = new Date(mCurrentDate.getTime() - YunFactory.ONE_DAY_TIME);
+            getData();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -83,5 +154,50 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void requestDataRefresh() {
+        super.requestDataRefresh();
+        mCurrentDate = new Date(System.currentTimeMillis());
+        getData();
+    }
+
+    /**
+     * 刷新数据
+     * @param data
+     */
+    @Override
+    public void refreshData(List<Gank> data) {
+        mAdapter.updateWithClear(data);
+    }
+
+    /**
+     * 为空显示
+     */
+    @Override
+    public void showEmpty() {
+        Snackbar.make(mRecyclerView, "~~o(>_<)o编辑今天休息哦！", Snackbar.LENGTH_INDEFINITE).show();
+    }
+
+    /**
+     * 网络加载错误显示
+     * @param throwable
+     */
+    @Override
+    public void showNetError(Throwable throwable) {
+        final Snackbar errorSnackbar = Snackbar.make(mRecyclerView, "无法加载数据，请检查网络是否连接，再点击重试！", Snackbar.LENGTH_INDEFINITE).setAction("重试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestDataRefresh();
+            }
+        });
+        errorSnackbar.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.detachView();
     }
 }

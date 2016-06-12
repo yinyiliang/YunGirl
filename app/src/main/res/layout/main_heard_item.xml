@@ -5,11 +5,11 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:gravity="start"
-          android:padding="16dp"
+          android:padding="12dp"
           android:layoutDirection="locale"
           android:textDirection="locale"
           android:textColor="#121435"
-          android:textSize="25sp"
+          android:textSize="18sp"
           tools:text="Android">
 
 </TextView>
