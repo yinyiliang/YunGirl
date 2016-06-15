@@ -13,4 +13,9 @@
         android:title="right"
         android:icon="@drawable/ic_right"
         app:showAsAction="always"/>
+    <item android:id="@+id/action_date"
+          android:orderInCategory="100"
+          android:title="date"
+          android:icon="@drawable/ic_date_range"
+          app:showAsAction="always"/>
 </menu>

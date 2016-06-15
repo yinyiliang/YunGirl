@@ -7,4 +7,8 @@ import android.view.View;
  */
 public interface BaseView {
     void showSnackbar(View view,String s);
+
+    void showEmpty();
+
+    void showNetError(Throwable throwable);
 }

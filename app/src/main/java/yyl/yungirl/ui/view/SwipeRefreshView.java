@@ -10,7 +10,4 @@ public interface SwipeRefreshView extends BaseView {
 
     void setRefresh(boolean refresh);
 
-    void showEmpty();
-
-    void showNetError(Throwable throwable);
 }

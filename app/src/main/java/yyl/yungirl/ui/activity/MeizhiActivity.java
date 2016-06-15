@@ -29,7 +29,8 @@ import yyl.yungirl.data.MeizhiData;
 import yyl.yungirl.presenter.MeizhiListPresenter;
 import yyl.yungirl.ui.view.IMeizhiListView;
 
-public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter> implements IMeizhiListView<Meizhi> {
+public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>
+        implements IMeizhiListView<Meizhi> {
 
     private GridLayoutManager layoutManager;
 

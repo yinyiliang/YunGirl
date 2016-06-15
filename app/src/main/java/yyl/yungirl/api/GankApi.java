@@ -5,6 +5,7 @@ import retrofit2.http.Path;
 import rx.Observable;
 import yyl.yungirl.data.GankData;
 import yyl.yungirl.data.RestVideoData;
+import yyl.yungirl.data.DateData;
 import yyl.yungirl.widget.YunFactory;
 import yyl.yungirl.data.MeizhiData;
 
@@ -24,4 +25,7 @@ public interface GankApi {
 
     @GET("/data/休息视频/" + YunFactory.meizhiSize + "/{page}")
     Observable<RestVideoData> getRestVideoData(@Path("page") int page);
+
+    @GET("day/history")
+    Observable<DateData> getDateData();
 }
