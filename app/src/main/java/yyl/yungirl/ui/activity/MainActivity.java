@@ -1,14 +1,6 @@
 package yyl.yungirl.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
-import android.graphics.drawable.shapes.RoundRectShape;
-import android.graphics.drawable.shapes.Shape;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -19,32 +11,30 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import yyl.yungirl.R;
 import yyl.yungirl.adpter.DailyGankAdapter;
-import yyl.yungirl.adpter.DateListAdapter;
 import yyl.yungirl.data.bean.Gank;
 import yyl.yungirl.presenter.DailyGankPresenter;
+import yyl.yungirl.ui.activity.base.BaseActivity;
 import yyl.yungirl.ui.view.CustomPopupWindow;
 import yyl.yungirl.ui.view.IDailyView;
-import yyl.yungirl.widget.YunFactory;
+import yyl.yungirl.util.DateUtil;
 
 public class MainActivity extends BaseActivity<DailyGankPresenter>
-        implements IDailyView<Gank>,NavigationView.OnNavigationItemSelectedListener {
+        implements IDailyView<Gank>,NavigationView.OnNavigationItemSelectedListener,DailyGankAdapter.GankItemClickListener {
     //抽屉
     private DrawerLayout drawer;
     //标题栏
@@ -59,7 +49,7 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
     private Date mCurrentDate;
     private List<String> mDateList;
 
-    private PopupWindow mPopupWindow;
+    private CustomPopupWindow mPopupWindow;
 
     @Override
     protected int getLayout() {
@@ -95,7 +85,7 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
     /**
      * 从服务器加载数据
      */
-    private void getData() {
+    public void getData() {
         mPresenter.getDailyData(mCurrentDate);
     }
 
@@ -108,6 +98,7 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new DailyGankAdapter(this,mGankList);
+        mAdapter.setItemClick(this);
         mRecyclerView.setAdapter(mAdapter);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -149,19 +140,14 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
         return true;
     }
 
+    /**
+     * 菜单点击事件
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_left:
-                mCurrentDate = new Date(mCurrentDate.getTime() + YunFactory.ONE_DAY_TIME);
-                Log.e("时间",mCurrentDate.toString());
-                getData();
-                break;
-            case  R.id.action_right:
-                mCurrentDate = new Date(mCurrentDate.getTime() - YunFactory.ONE_DAY_TIME);
-                Log.e("时间",mCurrentDate.toString());
-                getData();
-                break;
             case R.id.action_date:
                 showDateListpopup();
             default:
@@ -183,6 +169,8 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
         return true;
     }
 
+
+
     /**
      * 刷新数据
      * @param data
@@ -193,25 +181,35 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
     }
 
     /**
-     * 显示历史日期列表界面
+     * 显示历史日期PopupWindow
      */
     @Override
     public void showDateListpopup() {
 
-        CustomPopupWindow mPopupWindow = new CustomPopupWindow(this,mDateList);
+        mPopupWindow = new CustomPopupWindow(this,mDateList);
         WindowManager.LayoutParams params = getWindow().getAttributes();//创建当前界面的一个参数对象
-        params.alpha = 0.8f;//设置参数的透明度为0.8，透明度取值为0~1，1为完全不透明，0为完全透明，因为android中默认的屏幕颜色都是纯黑色的，所以如果设置为1，那么背景将都是黑色，设置为0，背景显示我们的当前界面
+        params.alpha = 0.8f;//设置参数的透明度为0.8
         getWindow().setAttributes(params);//把该参数对象设置进当前界面中
         mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {//设置PopupWindow退出监听器
             @Override
-            public void onDismiss() {//如果PopupWindow消失了，即退出了，那么触发该事件，然后把当前界面的透明度设置为不透明
+            public void onDismiss() {
                 WindowManager.LayoutParams params = getWindow().getAttributes();
                 params.alpha = 1.0f;//设置为不透明，即恢复原来的界面
                 getWindow().setAttributes(params);
             }
         });
-        //第一个参数为父View对象，即PopupWindow所在的父控件对象，第二个参数为它的重心，后面两个分别为x轴和y轴的偏移量
-        mPopupWindow.showAtLocation(LayoutInflater.from(this).inflate(R.layout.activity_main, null), Gravity.CENTER, 0, 0);
+        mPopupWindow.showAtLocation(LayoutInflater.from(this).inflate(
+                R.layout.activity_main, null), Gravity.CENTER, 0, 0);
+    }
+
+    /**
+     * PopupWindow的点击反馈
+     * @param s
+     * @throws ParseException
+     */
+    public void dateFromPopWindow(String s) throws ParseException {
+        Date date = DateUtil.parseToDate(s);
+        mPresenter.getDailyData(date);
     }
 
 
@@ -238,8 +236,33 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
         mPresenter.detachView();
     }
 
+    /**
+     * 显示弹出Snackbar方法
+     * @param view
+     * @param s
+     */
     @Override
     public void showSnackbar(View view, String s) {
         Snackbar.make(view,s,Snackbar.LENGTH_SHORT).show();
+    }
+
+    /**
+     *  每日妹纸图点击事件
+     * @param view
+     * @param position
+     */
+    @Override
+    public void onItemGirlClick(Gank view, View position) {
+
+    }
+
+    /**
+     * 每日干货点击事件
+     * @param gank
+     * @param position
+     */
+    @Override
+    public void onItemTitleClick(Gank gank, View position) {
+        WebViewActivity.toWebViewActivity(this,gank.url,gank.desc);
     }
 }

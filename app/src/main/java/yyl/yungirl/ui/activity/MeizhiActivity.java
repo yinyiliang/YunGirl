@@ -2,13 +2,9 @@ package yyl.yungirl.ui.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.graphics.Color;
 import android.os.Handler;
-import android.support.annotation.CheckResult;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,16 +13,11 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 import yyl.yungirl.R;
-import yyl.yungirl.api.YunRetrofit;
 import yyl.yungirl.adpter.MeizhiAdapter;
 import yyl.yungirl.data.bean.Meizhi;
-import yyl.yungirl.data.MeizhiData;
 import yyl.yungirl.presenter.MeizhiListPresenter;
+import yyl.yungirl.ui.activity.base.SwipeRefreshActivity;
 import yyl.yungirl.ui.view.IMeizhiListView;
 
 public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>

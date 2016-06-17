@@ -1,14 +1,14 @@
-package yyl.yungirl.ui.activity;
+package yyl.yungirl.ui.activity.base;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.CheckResult;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 
 import yyl.yungirl.R;
 import yyl.yungirl.presenter.BasePresenter;
+import yyl.yungirl.ui.activity.base.BaseActivity;
 import yyl.yungirl.ui.view.SwipeRefreshView;
 
 /**

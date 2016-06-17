@@ -1,4 +1,4 @@
-package yyl.yungirl.ui.activity;
+package yyl.yungirl.ui.activity.base;
 
 
 import android.os.Bundle;

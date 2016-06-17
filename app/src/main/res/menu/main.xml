@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/action_left"
-        android:orderInCategory="100"
-        android:title="left"
-        android:icon="@drawable/ic_left"
-        app:showAsAction="always"/>
-    <item
-        android:id="@+id/action_right"
-        android:orderInCategory="100"
-        android:title="right"
-        android:icon="@drawable/ic_right"
-        app:showAsAction="always"/>
+
     <item android:id="@+id/action_date"
           android:orderInCategory="100"
           android:title="date"
-          android:icon="@drawable/ic_date_range"
+          android:icon="@drawable/ic_date_range_white"
           app:showAsAction="always"/>
 </menu>
