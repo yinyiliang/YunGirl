@@ -22,16 +22,20 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.ViewHolder
     private List<Meizhi> mList;
     private Context mContext;
 
+    private OnItemClickListener itemClickListener;
+
     public MeizhiAdapter(List<Meizhi> mList, Context mContext) {
         this.mList = mList;
         this.mContext = mContext;
     }
 
-    public OnItemClickListener itemClickListener;
-
     //暴露一个方法给外界调用
     public void setOnItemClickListener(OnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
+    }
+
+    public Meizhi getMeizhi(int position){
+        return mList.get(position);
     }
 
     public interface OnItemClickListener {

@@ -8,5 +8,7 @@ public class YunFactory {
     public static final int meizhiSize = 10;
     //一天的时间
     public static final long ONE_DAY_TIME = 1000*60*60*24;
+    //共享元素标识
+    public static final String TRANSIT_PIC = "picture";
 
 }

@@ -1,5 +1,6 @@
 package yyl.yungirl.ui.activity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,11 +20,15 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 
+import com.orhanobut.logger.Logger;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import yyl.yungirl.R;
 import yyl.yungirl.adpter.DailyGankAdapter;
 import yyl.yungirl.data.bean.Gank;
@@ -32,17 +37,27 @@ import yyl.yungirl.ui.activity.base.BaseActivity;
 import yyl.yungirl.ui.view.CustomPopupWindow;
 import yyl.yungirl.ui.view.IDailyView;
 import yyl.yungirl.util.DateUtil;
+import yyl.yungirl.widget.YunFactory;
 
 public class MainActivity extends BaseActivity<DailyGankPresenter>
-        implements IDailyView<Gank>,NavigationView.OnNavigationItemSelectedListener,DailyGankAdapter.GankItemClickListener {
+        implements IDailyView<Gank>,NavigationView.OnNavigationItemSelectedListener,
+        DailyGankAdapter.GankItemClickListener {
+
     //抽屉
-    private DrawerLayout drawer;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
     //标题栏
-    private Toolbar toolbar;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
 
     private DailyGankPresenter mPresenter;
     private DailyGankAdapter mAdapter;
-    private RecyclerView mRecyclerView;
+
+    @BindView(R.id.main_recycler_view)
+    RecyclerView mRecyclerView;
     private List<Gank> mGankList;
 
     //日期相关
@@ -59,6 +74,7 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
         initDatas();
         initViews();
         initDrawer();
@@ -94,14 +110,13 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
      */
     private void initViews(){
         setTitle("每日资源",false);
-        mRecyclerView = (RecyclerView) findViewById(R.id.main_recycler_view);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new DailyGankAdapter(this,mGankList);
         mAdapter.setItemClick(this);
         mRecyclerView.setAdapter(mAdapter);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
@@ -111,10 +126,8 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
      * 初始化抽屉
      */
     private void initDrawer() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
-            drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             assert drawer != null;
             drawer.addDrawerListener(toggle);
@@ -248,12 +261,16 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
 
     /**
      *  每日妹纸图点击事件
-     * @param view
+     * @param gank
      * @param position
      */
     @Override
-    public void onItemGirlClick(Gank view, View position) {
-
+    public void onItemGirlClick(Gank gank, View position) {
+        Intent intent = PictureActivity.intentPictureActivity(MainActivity.this,
+                gank.url, gank.desc);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(
+                this,
+                position, YunFactory.TRANSIT_PIC).toBundle());
     }
 
     /**

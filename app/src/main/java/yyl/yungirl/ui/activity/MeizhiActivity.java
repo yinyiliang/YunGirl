@@ -1,7 +1,7 @@
 package yyl.yungirl.ui.activity;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -13,15 +13,19 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import yyl.yungirl.R;
 import yyl.yungirl.adpter.MeizhiAdapter;
+import yyl.yungirl.data.bean.Gank;
 import yyl.yungirl.data.bean.Meizhi;
 import yyl.yungirl.presenter.MeizhiListPresenter;
 import yyl.yungirl.ui.activity.base.SwipeRefreshActivity;
 import yyl.yungirl.ui.view.IMeizhiListView;
+import yyl.yungirl.widget.YunFactory;
 
 public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>
-        implements IMeizhiListView<Meizhi> {
+        implements IMeizhiListView<Meizhi> ,MeizhiAdapter.OnItemClickListener {
 
     private GridLayoutManager layoutManager;
 
@@ -30,7 +34,7 @@ public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>
     //是不是第一次到底
     private boolean isFirstTimeTouchBottom = true;
 
-    private RecyclerView mRecyclerView;
+    @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
     private MeizhiAdapter mAdapter;
     private List<Meizhi> mMeizhiList;
 
@@ -44,6 +48,7 @@ public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
         setTitle("福利", true);
         initData();
         initRecyclerView();
@@ -71,27 +76,13 @@ public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>
 
     //初始化RecyclerView，以及给每个Item添加点击事件、滑动设置
     private void initRecyclerView() {
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
         layoutManager = new GridLayoutManager(this, 2);
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new MeizhiAdapter(mMeizhiList, this);
         mRecyclerView.setAdapter(mAdapter);
         //给每个Item设置点击动画
-        mAdapter.setOnItemClickListener(new MeizhiAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(final View view, int positon) {
-                view.animate()
-                        .translationZ(20F)
-                        .setDuration(300)
-                        .setListener(new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        super.onAnimationEnd(animation);
-                        view.animate().translationZ(1f).setDuration(500).start();
-                    }
-                }).start();
-            }
-        });
+        mAdapter.setOnItemClickListener(this);
 
         //设置加载更多时，不用等到数据到底了才加载，给用户一个良好的体验
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -190,5 +181,19 @@ public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>
     @Override
     public void showSnackbar(View view, String s) {
         Snackbar.make(view, s, Snackbar.LENGTH_INDEFINITE).show();
+    }
+
+    /**
+     * 妹纸图点击事件
+     * @param view
+     * @param position
+     */
+    @Override
+    public void onItemClick(final View view, int position) {
+        Meizhi clickMeizhi = mAdapter.getMeizhi(position);
+        Intent intent = PictureActivity.intentPictureActivity(MeizhiActivity.this,
+                clickMeizhi.url, clickMeizhi.desc);
+        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(
+                this,view,YunFactory.TRANSIT_PIC).toBundle());
     }
 }

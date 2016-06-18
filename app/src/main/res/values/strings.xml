@@ -6,4 +6,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="picture_has_save_to">图片已保存至 %s 文件夹</string>
+    <string name="share_meizhi_to">分享妹纸到...</string>
 </resources>

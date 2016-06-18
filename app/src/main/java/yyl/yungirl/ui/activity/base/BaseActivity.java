@@ -8,8 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import yyl.yungirl.R;
 import yyl.yungirl.presenter.Presenter;
 
@@ -20,14 +23,17 @@ import yyl.yungirl.presenter.Presenter;
  */
 public abstract class BaseActivity<P extends Presenter> extends AppCompatActivity {
 
-    protected Toolbar mToolbar;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
     protected abstract int getLayout();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         setContentView(getLayout());
+        ButterKnife.bind(this);
         initToolbar();
 
     }
@@ -36,7 +42,6 @@ public abstract class BaseActivity<P extends Presenter> extends AppCompatActivit
      * 初始化Toolbar
      */
     private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar == null) {
             throw new NullPointerException("please add a Toolbar in your layout.");
         }
