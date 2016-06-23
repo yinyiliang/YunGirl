@@ -42,7 +42,7 @@ public class MeizhiListPresenter extends BasePresenter<IMeizhiListView> {
      * @param page
      */
     public void loadData(final int page) {
-        YunRetrofit.getRetrofit().getGankService().getMeizhiData(page)
+        YunRetrofit.getRetrofit(YunFactory.GANK).getGankService().getMeizhiData(page)
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<MeizhiData, List<Meizhi>>() {
                     @Override

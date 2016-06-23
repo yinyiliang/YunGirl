@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,14 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
-
-import com.orhanobut.logger.Logger;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import yyl.yungirl.R;
@@ -37,6 +32,7 @@ import yyl.yungirl.ui.activity.base.BaseActivity;
 import yyl.yungirl.ui.view.CustomPopupWindow;
 import yyl.yungirl.ui.view.IDailyView;
 import yyl.yungirl.util.DateUtil;
+import yyl.yungirl.util.HintUtil;
 import yyl.yungirl.widget.YunFactory;
 
 public class MainActivity extends BaseActivity<DailyGankPresenter>
@@ -177,6 +173,9 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
                 case R.id.nav_fuli:
                     startActivity(new Intent(MainActivity.this,MeizhiActivity.class));
                     break;
+                case R.id.nav_one:
+                    startActivity(new Intent(MainActivity.this,OneActivity.class));
+                    break;
             }
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -225,40 +224,6 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
         mPresenter.getDailyData(date);
     }
 
-
-    /**
-     * 为空显示
-     */
-    @Override
-    public void showEmpty() {
-        showSnackbar(mRecyclerView,"~~o(>_<)o编辑今天休息哦！");
-    }
-
-    /**
-     * 网络加载错误显示
-     * @param throwable
-     */
-    @Override
-    public void showNetError(Throwable throwable) {
-        showSnackbar(mRecyclerView,"无法加载数据，请检查网络是否连接。");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mPresenter.detachView();
-    }
-
-    /**
-     * 显示弹出Snackbar方法
-     * @param view
-     * @param s
-     */
-    @Override
-    public void showSnackbar(View view, String s) {
-        Snackbar.make(view,s,Snackbar.LENGTH_SHORT).show();
-    }
-
     /**
      *  每日妹纸图点击事件
      * @param gank
@@ -281,5 +246,30 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
     @Override
     public void onItemTitleClick(Gank gank, View position) {
         WebViewActivity.toWebViewActivity(this,gank.url,gank.desc);
+    }
+
+    /**
+     * 网络加载错误显示
+     * @param throwable
+     */
+    @Override
+    public void showNetError(Throwable throwable) {
+        showHint(mRecyclerView,"无法加载数据，请检查网络是否连接。");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.detachView();
+    }
+
+    /**
+     * 显示提示
+     * @param view
+     * @param s
+     */
+    @Override
+    public void showHint(View view, String s) {
+        HintUtil.showSnackbar(view,s);
     }
 }

@@ -6,4 +6,27 @@
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">240dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="circle_image">100dp</dimen>
+
+    <dimen name="text_size_10">10sp</dimen>
+    <dimen name="text_size_14">14sp</dimen>
+    <dimen name="text_size_16">16sp</dimen>
+    <dimen name="text_size_18">18sp</dimen>
+    <dimen name="text_size_20">20sp</dimen>
+    <dimen name="text_size_24">24sp</dimen>
+
+    <dimen name="apace_1">1dp</dimen>
+    <dimen name="apace_2">2dp</dimen>
+    <dimen name="apace_3">3dp</dimen>
+    <dimen name="apace_4">4dp</dimen>
+    <dimen name="apace_5">5dp</dimen>
+    <dimen name="apace_6">6dp</dimen>
+    <dimen name="apace_7">7dp</dimen>
+    <dimen name="apace_8">8dp</dimen>
+    <dimen name="apace_9">9dp</dimen>
+    <dimen name="apace_10">10dp</dimen>
+    <dimen name="apace_12">12dp</dimen>
+    <dimen name="apace_15">15dp</dimen>
+    <dimen name="apace_16">16dp</dimen>
 </resources>

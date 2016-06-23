@@ -29,6 +29,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
+    //图片处理
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:recyclerview-v7:23.4.0'
@@ -44,4 +45,9 @@ dependencies {
     compile 'com.github.orhanobut:logger:1.12'
     //水平进度条
     compile 'com.daimajia.numberprogressbar:library:1.2@aar'
+    //泄露内存检测
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    compile 'com.squareup.okhttp3:okhttp:3.3.1'
 }

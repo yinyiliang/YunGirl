@@ -22,6 +22,7 @@ import yyl.yungirl.data.bean.Meizhi;
 import yyl.yungirl.presenter.MeizhiListPresenter;
 import yyl.yungirl.ui.activity.base.SwipeRefreshActivity;
 import yyl.yungirl.ui.view.IMeizhiListView;
+import yyl.yungirl.util.HintUtil;
 import yyl.yungirl.widget.YunFactory;
 
 public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>
@@ -150,7 +151,7 @@ public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>
      */
     @Override
     public void showEmpty() {
-        showSnackbar(mRecyclerView,"妹子还在化妆~~o(>_<)o");
+        showHint(mRecyclerView,"妹子还在化妆~~o(>_<)o");
     }
 
     /**
@@ -179,8 +180,8 @@ public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>
     }
 
     @Override
-    public void showSnackbar(View view, String s) {
-        Snackbar.make(view, s, Snackbar.LENGTH_INDEFINITE).show();
+    public void showHint(View view, String s) {
+        HintUtil.showSnackbar(view,s);
     }
 
     /**

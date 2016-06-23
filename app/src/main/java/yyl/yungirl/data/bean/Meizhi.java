@@ -1,6 +1,5 @@
 package yyl.yungirl.data.bean;
 
-import java.util.List;
 
 /**
  * Created by Administrator on 2016/6/6 0006.

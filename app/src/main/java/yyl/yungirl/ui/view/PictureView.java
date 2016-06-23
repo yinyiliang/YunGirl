@@ -6,8 +6,8 @@ package yyl.yungirl.ui.view;
 public interface PictureView extends BaseView {
     //保存图片
     void saveSuccess(String msg);
+    //保存失败
     void saveFail(String msg);
-
     //分享图片
     void shareFail(String msg);
 

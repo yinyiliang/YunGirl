@@ -1,12 +1,29 @@
 <resources>
-    <string name="app_name">YunGirl</string>
+    <string name="app_name" translatable="false">YunGirl</string>
     <string name="title_activity_main">MainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings" translatable="false">Settings</string>
 
     <string name="picture_has_save_to">图片已保存至 %s 文件夹</string>
     <string name="share_meizhi_to">分享妹纸到...</string>
+
+    <string name="motto">总有人要成功，为什么不能是我。</string>
+    <string name="history_list">往期列表</string>
+    <string name="fuli">福利</string>
+    <string name="one">ONE</string>
+    <string name="Communicate" translatable="false">信息</string>
+    <string name="setting">设置</string>
+    <string name="about" translatable="false">关于YunGirl</string>
+
+    <string name="save">保存</string>
+    <string name="share">分享</string>
+
+    <string name="refresh">刷新</string>
+    <string name="copy">复制链接</string>
+    <string name="use_another">从浏览器打开链接</string>
+    <string name="date">date</string>
+
 </resources>

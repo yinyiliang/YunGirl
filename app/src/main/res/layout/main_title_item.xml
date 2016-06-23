@@ -5,11 +5,11 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="horizontal"
-              android:padding="8dp">
+              android:padding="@dimen/apace_8">
 
     <View
-        android:layout_width="5dp"
-        android:layout_height="5dp"
+        android:layout_width="@dimen/apace_5"
+        android:layout_height="@dimen/apace_5"
         android:layout_gravity="center"
         android:background="@drawable/point"/>
 
@@ -17,12 +17,12 @@
         android:id="@+id/tv_title_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:paddingBottom="6dp"
-        android:paddingLeft="6dp"
-        android:paddingRight="6dp"
-        android:paddingTop="6dp"
-        android:textSize="14sp"
+        android:layout_marginStart="@dimen/apace_4"
+        android:paddingBottom="@dimen/apace_6"
+        android:paddingLeft="@dimen/apace_6"
+        android:paddingRight="@dimen/apace_6"
+        android:paddingTop="@dimen/apace_6"
+        android:textSize="@dimen/text_size_14"
         tools:text="图片可拖拽排序的View"/>
 
 </LinearLayout>

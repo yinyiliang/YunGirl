@@ -26,6 +26,7 @@
         <activity android:name=".ui.activity.MeizhiActivity"/>
         <activity android:name=".ui.activity.WebViewActivity"/>
         <activity android:name=".ui.activity.PictureActivity"/>
+        <activity android:name=".ui.activity.OneActivity"/>
     </application>
 
 </manifest>

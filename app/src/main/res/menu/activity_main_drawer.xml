@@ -2,29 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_daily"
-              android:icon="@drawable/ic_daily_18dp"
-              android:title="干货"/>
         <item
             android:id="@+id/nav_fuli"
             android:icon="@drawable/ic_photo_blue_grey_300_18dp"
-            android:title="福利"/>
+            android:title="@string/fuli"/>
         <item
-            android:id="@+id/nav_video"
-            android:icon="@drawable/ic_vide_18dp"
-            android:title="休息视频"/>
+            android:id="@+id/nav_one"
+            android:icon="@drawable/ic_one"
+            android:title="@string/one"/>
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="@string/Communicate">
         <menu>
             <item
                 android:id="@+id/nav_setting"
                 android:icon="@drawable/ic_settings_18dp"
-                android:title="设置"/>
+                android:title="@string/setting"/>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_about_18dp"
-                android:title="关于YunGirl"/>
+                android:title="@string/about"/>
         </menu>
     </item>
 

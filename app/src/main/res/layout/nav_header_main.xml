@@ -13,17 +13,17 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="@dimen/circle_image"
+        android:layout_height="@dimen/circle_image"
         android:src="@mipmap/meinv"/>
 
     <TextView
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/apace_15"
         android:id="@+id/textView"
-        android:textSize="16sp"
+        android:textSize="@dimen/text_size_16"
         android:textColor="#7E94BF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="总有人要成功，为什么不能是我。"/>
+        android:text="@string/motto"/>
 
 </LinearLayout>
