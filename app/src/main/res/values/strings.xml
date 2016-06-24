@@ -14,7 +14,8 @@
     <string name="history_list">往期列表</string>
     <string name="fuli">福利</string>
     <string name="one">ONE</string>
-    <string name="Communicate" translatable="false">信息</string>
+    <string name="Communicate" translatable="false">YunGirl</string>
+    <string name="object">object</string>
     <string name="setting">设置</string>
     <string name="about" translatable="false">关于YunGirl</string>
 
@@ -25,5 +26,11 @@
     <string name="copy">复制链接</string>
     <string name="use_another">从浏览器打开链接</string>
     <string name="date">date</string>
+
+    <string name="left">左</string>
+    <string name="right">右</string>
+
+    <string name="one_refresh_hint">未来并不遥远，也许就在明天。</string>
+    <string name="one_loadmore_hint">历史已成空，就不要再去追寻了。</string>
 
 </resources>

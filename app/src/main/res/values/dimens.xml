@@ -29,4 +29,5 @@
     <dimen name="apace_12">12dp</dimen>
     <dimen name="apace_15">15dp</dimen>
     <dimen name="apace_16">16dp</dimen>
+    <dimen name="apace_24">24dp</dimen>
 </resources>

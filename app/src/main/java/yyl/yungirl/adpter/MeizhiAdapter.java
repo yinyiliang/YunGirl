@@ -75,7 +75,7 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.ViewHolder
         public ViewHolder(View itemView) {
             super(itemView);
             meizhiView = (MyImageView) itemView.findViewById(R.id.iv_meizhi);
-            meizhiView.setCustomSize(50,50);
+            meizhiView.setCustomSize(50,60);
             meizhiView.setOnClickListener(this);
         }
 

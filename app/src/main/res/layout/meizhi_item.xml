@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/apace_2"
-              android:layout_marginLeft="@dimen/apace_1"
-              android:layout_marginRight="@dimen/apace_1"
+              android:background="@drawable/one_bg"
+              android:elevation="@dimen/apace_3"
+              android:layout_marginTop="@dimen/apace_4"
+              android:layout_marginLeft="@dimen/apace_4"
+              android:layout_marginRight="@dimen/apace_4"
               android:orientation="vertical">
 
     <yyl.yungirl.widget.MyImageView
@@ -12,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY"
+        tools:src="@mipmap/meinv"/>
 
 </LinearLayout>

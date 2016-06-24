@@ -62,6 +62,8 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
 
     private CustomPopupWindow mPopupWindow;
 
+    private long exitTime = 0; ////记录第一次点击的时间
+
     @Override
     protected int getLayout() {
         return R.layout.activity_main;
@@ -139,7 +141,12 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                showHint(mRecyclerView,"再按一次退出程序");
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+            }
         }
     }
 
@@ -254,7 +261,7 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
      */
     @Override
     public void showNetError(Throwable throwable) {
-        showHint(mRecyclerView,"无法加载数据，请检查网络是否连接。");
+        showHint(mRecyclerView,throwable.toString());
     }
 
     @Override
