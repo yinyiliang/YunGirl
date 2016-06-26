@@ -2,7 +2,7 @@ package yyl.yungirl.data.bean;
 
 
 /**
- * Created by Administrator on 2016/6/6 0006.
+ * Created by yinyiliang on 2016/6/6 0006.
  */
 public class Meizhi extends Soul {
 

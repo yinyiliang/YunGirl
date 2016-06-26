@@ -5,14 +5,13 @@
               android:background="@drawable/side_nav_bar"
               android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/profile_image"
         android:layout_alignParentStart="true"
         android:layout_centerInParent="true"
         android:layout_marginStart="@dimen/apace_16"
         android:layout_width="@dimen/circle_image"
-        android:layout_height="@dimen/circle_image"
-        android:src="@mipmap/meinv"/>
+        android:layout_height="@dimen/circle_image"/>
 
     <TextView
         android:layout_marginTop="@dimen/apace_15"

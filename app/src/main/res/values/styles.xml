@@ -2,25 +2,22 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
 
+    <!--Toolbar主题-->
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
     <style name="ViaTextAppearance">
         <item name="android:textColor">@color/tingeColor</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">@dimen/apace_12</item>
     </style>
 
+    <!--PopupWindow出现和消失动画效果-->
     <style name="PopupWindow_anim_style">
         <item name="android:windowEnterAnimation">@anim/popupshow_anim</item>
         <item name="android:windowExitAnimation">@anim/popuphide_anim</item>

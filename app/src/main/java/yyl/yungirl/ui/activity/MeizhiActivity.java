@@ -26,7 +26,7 @@ import yyl.yungirl.util.HintUtil;
 import yyl.yungirl.widget.YunFactory;
 
 public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>
-        implements IMeizhiListView<Meizhi> ,MeizhiAdapter.OnItemClickListener {
+        implements IMeizhiListView ,MeizhiAdapter.OnItemClickListener {
 
     private GridLayoutManager layoutManager;
 

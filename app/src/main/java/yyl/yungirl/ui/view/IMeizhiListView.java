@@ -6,9 +6,9 @@ import yyl.yungirl.data.bean.Meizhi;
 import yyl.yungirl.data.bean.Soul;
 
 /**
- * Created by Administrator on 2016/6/7 0007.
+ * Created by yinylinag on 2016/6/7 0007.
  */
-public interface IMeizhiListView<Meizhi extends Soul> extends SwipeRefreshView {
+public interface IMeizhiListView extends SwipeRefreshView {
 
     //刷新数据
     void refreshData(List<Meizhi> data);

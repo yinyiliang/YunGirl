@@ -2,11 +2,14 @@ package yyl.yungirl.api;
 
 import com.orhanobut.logger.Logger;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
+import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -18,10 +21,13 @@ import okio.BufferedSource;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import yyl.yungirl.App;
+import yyl.yungirl.util.HintUtil;
+import yyl.yungirl.util.SystemUtil;
 import yyl.yungirl.widget.YunFactory;
 
 /**
- * Created by Administrator on 2016/6/6 0006.
+ * Created by yinyiliang on 2016/6/6 0006.
  */
 public class YunRetrofit {
 
@@ -35,7 +41,13 @@ public class YunRetrofit {
         if (mOkHttpClient == null) {
             synchronized (YunRetrofit.class) {
                 if (mOkHttpClient == null) {
-                    mOkHttpClient = new OkHttpClient.Builder()
+
+                    //指定缓存路径、缓存大小50M
+                    Cache cache = new Cache(new File(App.mContext.getCacheDir(), "YunCache"),
+                            1024 * 1024 * 50);
+
+                    mOkHttpClient = new OkHttpClient.Builder().cache(cache)
+                            .addNetworkInterceptor(mCacheControlInterceptor)
                             .addInterceptor(mLoggingInterceptor)
                             .retryOnConnectionFailure(true)
                             .connectTimeout(30, TimeUnit.SECONDS).build();
@@ -45,17 +57,17 @@ public class YunRetrofit {
         return mOkHttpClient;
     }
 
-    public synchronized static YunRetrofit getRetrofit(int hostType) {
+    public synchronized static YunRetrofit getRetrofit() {
         if (retrofit == null) {
-            retrofit = new YunRetrofit(hostType);
+            retrofit = new YunRetrofit();
         }
         return retrofit;
     }
 
-    private YunRetrofit(int hostType) {
+    private YunRetrofit() {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(YunFactory.getHost(hostType))
+                .baseUrl(YunFactory.GANK_HOST)
                 .client(setupOkHttp())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -68,6 +80,32 @@ public class YunRetrofit {
     public YunApi getGankService() {
         return gankService;
     }
+
+    /**
+     * 设置缓冲拦截头
+     */
+    private Interceptor mCacheControlInterceptor = new Interceptor() {
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request request = chain.request();
+            if (!SystemUtil.isConnected(App.mContext)) {
+                request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
+                HintUtil.showToast("暂无网络");
+            }
+
+            Response response = chain.proceed(request);
+            if (SystemUtil.isConnected(App.mContext)) {
+                //有网的时候读接口上的@Headers里的配置
+                String cacheControl = request.cacheControl().toString();
+                return response.newBuilder().header("Cache-Control", cacheControl)
+                        .removeHeader("Pragma").build();
+            } else {
+                return response.newBuilder()
+                        .header("Cache-Control", "public, only-if-cached," + YunFactory.CACHE_STALE_SEC)
+                        .removeHeader("Pragma").build();
+            }
+        }
+    };
 
     // 打印返回的json数据拦截器
     private Interceptor mLoggingInterceptor = new Interceptor() {

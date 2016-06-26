@@ -2,6 +2,7 @@ package yyl.yungirl.api;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -22,10 +23,12 @@ public interface YunApi {
     //妹子图
     @GET("data/福利/" + YunFactory.meizhiSize + "/{page}")
     Observable<MeizhiData> getMeizhiData(
+            @Header("Cache-Control") String cacheControl,
             @Path("page") int page);
 
     //每日干货
     @GET("day/{year}/{month}/{day}") Observable<GankData> getGankData(
+            @Header("Cache-Control") String cacheControl,
             @Path("year") int year,
             @Path("month") int month,
             @Path("day") int day);
@@ -33,9 +36,12 @@ public interface YunApi {
 
     //gank.io历史干货发布日期
     @GET("day/history")
-    Observable<DateData> getDateData();
+    Observable<DateData> getDateData(@Header("Cache-Control") String cacheControl);
 
     //ONE一个 的每日一张图和一句话资源
     @GET("http://rest.wufazhuce.com/OneForWeb/one/OneForWeb/one/getHp_N")
-    Observable<OneData> getOne(@Query("strDate") String strDate, @Query("strRow") int strRow);
+    Observable<OneData> getOne(
+            @Header("Cache-Control") String cacheControl,
+            @Query("strDate") String strDate,
+            @Query("strRow") int strRow);
 }

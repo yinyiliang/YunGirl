@@ -1,16 +1,22 @@
 package yyl.yungirl.ui.activity.base;
 
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.DecelerateInterpolator;
 
 
 import butterknife.BindView;
@@ -27,6 +33,9 @@ public abstract class BaseActivity<P extends Presenter> extends AppCompatActivit
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+    @BindView(R.id.id_appbar)
+    AppBarLayout appBarLayout;
+    protected boolean mIsHidden = false;
 
     protected abstract int getLayout();
 
@@ -36,26 +45,24 @@ public abstract class BaseActivity<P extends Presenter> extends AppCompatActivit
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         setContentView(getLayout());
         ButterKnife.bind(this);
-        initToolbar();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = getWindow();
-            // Translucent status bar
-            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        }
-
-    }
-
-    /**
-     * 初始化Toolbar
-     */
-    private void initToolbar() {
-        if (mToolbar == null) {
-            throw new NullPointerException("please add a Toolbar in your layout.");
-        }
         setSupportActionBar(mToolbar);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){//4.4 全透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0 全透明实现
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);//calculateStatusColor(Color.WHITE, (int) alphaValue)
+        }
+
+
     }
+
 
     /**
      * 设置菜单数的默认值
@@ -94,6 +101,14 @@ public abstract class BaseActivity<P extends Presenter> extends AppCompatActivit
         setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(showHome);
         getSupportActionBar().setDisplayShowHomeEnabled(showHome);
+    }
+
+    protected void hideOrShowToolbar () {
+        appBarLayout.animate()
+                    .translationY(mIsHidden ? 0 : -appBarLayout.getHeight())
+                    .setInterpolator(new DecelerateInterpolator(2))
+                    .start();
+        mIsHidden = !mIsHidden;
     }
 
 }

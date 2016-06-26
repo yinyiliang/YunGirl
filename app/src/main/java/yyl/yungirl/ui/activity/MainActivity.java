@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,7 +18,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
+
+import com.bumptech.glide.Glide;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,11 +37,12 @@ import yyl.yungirl.ui.activity.base.BaseActivity;
 import yyl.yungirl.ui.view.CustomPopupWindow;
 import yyl.yungirl.ui.view.IDailyView;
 import yyl.yungirl.util.DateUtil;
+import yyl.yungirl.util.GlideCircleTransform;
 import yyl.yungirl.util.HintUtil;
 import yyl.yungirl.widget.YunFactory;
 
 public class MainActivity extends BaseActivity<DailyGankPresenter>
-        implements IDailyView<Gank>,NavigationView.OnNavigationItemSelectedListener,
+        implements IDailyView,NavigationView.OnNavigationItemSelectedListener,
         DailyGankAdapter.GankItemClickListener {
 
     //抽屉
@@ -93,7 +99,6 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
         mCurrentDate = new Date(System.currentTimeMillis());
 
         mDateList = new ArrayList<>();
-        mDateList = mPresenter.getDateData();
     }
 
     /**
@@ -101,6 +106,7 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
      */
     public void getData() {
         mPresenter.getDailyData(mCurrentDate);
+        mDateList = mPresenter.getDateData();
     }
 
     /**
@@ -127,6 +133,20 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+            //使用Glide的Transformation来自定义加载圆形ImageView
+            navigationView.post(new Runnable() {
+                @Override
+                public void run() {
+                    final ImageView circleImage = (ImageView) findViewById(R.id.profile_image);
+                    if (circleImage != null) {
+                        Glide.with(navigationView.getContext()).load(R.mipmap.meinv).crossFade()
+                                .transform(new GlideCircleTransform(navigationView.getContext()))
+                                .into(circleImage);
+                    }
+                }
+            });
+
             assert drawer != null;
             drawer.addDrawerListener(toggle);
             toggle.syncState();
@@ -188,14 +208,12 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
         return true;
     }
 
-
-
     /**
      * 刷新数据
      * @param data
      */
     @Override
-    public void refreshData(List<Gank> data) {
+    public void flushData(List<Gank> data) {
         mAdapter.updateWithClear(data);
     }
 
@@ -261,7 +279,13 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
      */
     @Override
     public void showNetError(Throwable throwable) {
-        showHint(mRecyclerView,throwable.toString());
+        final Snackbar errorSnackbar = Snackbar.make(mRecyclerView, "无法加载数据，请检查网络是否连接，再点击重试！", Snackbar.LENGTH_INDEFINITE).setAction("重试", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getData();
+            }
+        });
+        errorSnackbar.show();
     }
 
     @Override
