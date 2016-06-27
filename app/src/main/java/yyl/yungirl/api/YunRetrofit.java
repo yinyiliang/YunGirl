@@ -48,7 +48,6 @@ public class YunRetrofit {
 
                     mOkHttpClient = new OkHttpClient.Builder().cache(cache)
                             .addNetworkInterceptor(mCacheControlInterceptor)
-                            .addInterceptor(mLoggingInterceptor)
                             .retryOnConnectionFailure(true)
                             .connectTimeout(30, TimeUnit.SECONDS).build();
                 }
@@ -97,50 +96,53 @@ public class YunRetrofit {
             if (SystemUtil.isConnected(App.mContext)) {
                 //有网的时候读接口上的@Headers里的配置
                 String cacheControl = request.cacheControl().toString();
-                return response.newBuilder().header("Cache-Control", cacheControl)
-                        .removeHeader("Pragma").build();
+                return response.newBuilder()
+                        .header("Cache-Control", cacheControl)
+                        .removeHeader("Pragma") //清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
+                        .build();
             } else {
                 return response.newBuilder()
                         .header("Cache-Control", "public, only-if-cached," + YunFactory.CACHE_STALE_SEC)
-                        .removeHeader("Pragma").build();
+                        .removeHeader("Pragma")
+                        .build();
             }
         }
     };
 
-    // 打印返回的json数据拦截器
-    private Interceptor mLoggingInterceptor = new Interceptor() {
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-
-            final Request request = chain.request();
-            final Response response = chain.proceed(request);
-
-            final ResponseBody responseBody = response.body();
-            final long contentLength = responseBody.contentLength();
-
-            BufferedSource source = responseBody.source();
-            source.request(Long.MAX_VALUE); // Buffer the entire body.
-            Buffer buffer = source.buffer();
-
-            Charset charset = Charset.forName("UTF-8");
-            MediaType contentType = responseBody.contentType();
-            if (contentType != null) {
-                try {
-                    charset = contentType.charset(charset);
-                } catch (UnsupportedCharsetException e) {
-                    Logger.e("");
-                    Logger.e("Couldn't decode the response body; charset is likely malformed.");
-                    return response;
-                }
-            }
-
-            if (contentLength != 0) {
-                Logger.v("--------------------------------------------开始打印返回数据----------------------------------------------------");
-                Logger.json(buffer.clone().readString(charset));
-                Logger.v("--------------------------------------------结束打印返回数据----------------------------------------------------");
-            }
-
-            return response;
-        }
-    };
+//    // 打印返回的json数据拦截器
+//    private Interceptor mLoggingInterceptor = new Interceptor() {
+//        @Override
+//        public Response intercept(Chain chain) throws IOException {
+//
+//            final Request request = chain.request();
+//            final Response response = chain.proceed(request);
+//
+//            final ResponseBody responseBody = response.body();
+//            final long contentLength = responseBody.contentLength();
+//
+//            BufferedSource source = responseBody.source();
+//            source.request(Long.MAX_VALUE); // Buffer the entire body.
+//            Buffer buffer = source.buffer();
+//
+//            Charset charset = Charset.forName("UTF-8");
+//            MediaType contentType = responseBody.contentType();
+//            if (contentType != null) {
+//                try {
+//                    charset = contentType.charset(charset);
+//                } catch (UnsupportedCharsetException e) {
+//                    Logger.e("");
+//                    Logger.e("Couldn't decode the response body; charset is likely malformed.");
+//                    return response;
+//                }
+//            }
+//
+//            if (contentLength != 0) {
+//                Logger.v("--------------------------------------------开始打印返回数据----------------------------------------------------");
+//                Logger.json(buffer.clone().readString(charset));
+//                Logger.v("--------------------------------------------结束打印返回数据----------------------------------------------------");
+//            }
+//
+//            return response;
+//        }
+//    };
 }

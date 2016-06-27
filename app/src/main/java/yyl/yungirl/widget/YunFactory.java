@@ -1,5 +1,13 @@
 package yyl.yungirl.widget;
 
+import android.text.format.Formatter;
+import android.util.Log;
+
+import com.orhanobut.logger.Logger;
+
+import java.io.File;
+import java.io.FileInputStream;
+
 import yyl.yungirl.App;
 import yyl.yungirl.util.SystemUtil;
 
@@ -18,13 +26,13 @@ public class YunFactory {
     //Gank的BaseUrl
     public static final String GANK_HOST = "http://gank.io/api/";
 
-    //设缓存有效期为七天
-    public static final long CACHE_STALE_SEC = 60 * 60 * 24 * 7;
+    //设缓存有效期为四周
+    public static final long CACHE_STALE_SEC = 60 * 60 * 24 * 28;
     //查询缓存的Cache-Control设置，为if-only-cache时只查询缓存而不会请求服务器，max-stale可以配合设置缓存失效时间
     public static final String CACHE_CONTROL_CACHE = "only-if-cached, max-stale=" + CACHE_STALE_SEC;
     //查询网络的Cache-Control设置，头部Cache-Control设为max-age=0
     //(假如请求了服务器并在a时刻返回响应结果，则在max-age规定的秒数内，浏览器将不会发送对应的请求到服务器，数据由缓存直接返回)时则不会使用缓存而请求服务器
-    public static final String CACHE_CONTROL_NETWORK = "max-age=0";
+    public static final String CACHE_CONTROL_NETWORK = "max-age=";
 
 
     /**
@@ -34,5 +42,7 @@ public class YunFactory {
     public static String getCacheControl() {
         return SystemUtil.isConnected(App.mContext) ? CACHE_CONTROL_NETWORK : CACHE_CONTROL_CACHE;
     }
+
+
 
 }

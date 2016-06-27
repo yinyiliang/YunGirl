@@ -33,6 +33,7 @@ import yyl.yungirl.R;
 import yyl.yungirl.adpter.DailyGankAdapter;
 import yyl.yungirl.data.bean.Gank;
 import yyl.yungirl.presenter.DailyGankPresenter;
+import yyl.yungirl.setting.SettingActivity;
 import yyl.yungirl.ui.activity.base.BaseActivity;
 import yyl.yungirl.ui.view.CustomPopupWindow;
 import yyl.yungirl.ui.view.IDailyView;
@@ -203,6 +204,10 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
                 case R.id.nav_one:
                     startActivity(new Intent(MainActivity.this,OneActivity.class));
                     break;
+                case R.id.nav_setting:
+                    startActivity(new Intent(MainActivity.this, SettingActivity.class));
+                    break;
+
             }
         drawer.closeDrawer(GravityCompat.START);
         return true;

@@ -2,12 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="yyl.yungirl">
 
+    <!--网络访问-->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!--写入扩展存储，向扩展卡写入数据，用于写入缓存定位数据-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
 
     <application
         android:name=".App"
@@ -31,6 +36,8 @@
         <activity android:name=".ui.activity.PictureActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.OneActivity"
+                  android:screenOrientation="portrait"/>
+        <activity android:name=".setting.SettingActivity"
                   android:screenOrientation="portrait"/>
     </application>
 
