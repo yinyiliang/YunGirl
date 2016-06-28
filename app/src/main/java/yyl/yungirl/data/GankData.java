@@ -7,7 +7,7 @@ import java.util.List;
 import yyl.yungirl.data.bean.Gank;
 
 /**
- * Created by Administrator on 2016/6/7 0007.
+ * Created by yinyiliang on 2016/6/7 0007.
  */
 public class GankData extends BaseData {
 

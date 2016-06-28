@@ -7,13 +7,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
@@ -22,7 +20,7 @@ import android.view.animation.DecelerateInterpolator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import yyl.yungirl.R;
-import yyl.yungirl.presenter.Presenter;
+import yyl.yungirl.presenter.base.Presenter;
 
 /**
  * 基础Activity
@@ -47,6 +45,7 @@ public abstract class BaseActivity<P extends Presenter> extends AppCompatActivit
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
 
+        //透明状态栏
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){//4.4 全透明状态栏
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
@@ -103,6 +102,9 @@ public abstract class BaseActivity<P extends Presenter> extends AppCompatActivit
         getSupportActionBar().setDisplayShowHomeEnabled(showHome);
     }
 
+    /**
+     * 点击隐藏Toolbar
+     */
     protected void hideOrShowToolbar () {
         appBarLayout.animate()
                     .translationY(mIsHidden ? 0 : -appBarLayout.getHeight())

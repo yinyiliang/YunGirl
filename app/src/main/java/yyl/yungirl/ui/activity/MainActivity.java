@@ -4,6 +4,7 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -30,16 +31,18 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import yyl.yungirl.R;
-import yyl.yungirl.adpter.DailyGankAdapter;
+import yyl.yungirl.about.AboutActivity;
+import yyl.yungirl.ui.adpter.DailyGankAdapter;
 import yyl.yungirl.data.bean.Gank;
 import yyl.yungirl.presenter.DailyGankPresenter;
 import yyl.yungirl.setting.SettingActivity;
 import yyl.yungirl.ui.activity.base.BaseActivity;
-import yyl.yungirl.ui.view.CustomPopupWindow;
+import yyl.yungirl.util.CustomPopupWindow;
 import yyl.yungirl.ui.view.IDailyView;
 import yyl.yungirl.util.DateUtil;
 import yyl.yungirl.util.GlideCircleTransform;
 import yyl.yungirl.util.HintUtil;
+import yyl.yungirl.util.ImageLoader;
 import yyl.yungirl.widget.YunFactory;
 
 public class MainActivity extends BaseActivity<DailyGankPresenter>
@@ -55,6 +58,9 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
 
     @BindView(R.id.nav_view)
     NavigationView navigationView;
+
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
 
     private DailyGankPresenter mPresenter;
     private DailyGankAdapter mAdapter;
@@ -124,7 +130,13 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
 
         setSupportActionBar(toolbar);
 
-
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getData();
+                mRecyclerView.scrollToPosition(0);
+            }
+        });
     }
 
     /**
@@ -141,9 +153,11 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
                 public void run() {
                     final ImageView circleImage = (ImageView) findViewById(R.id.profile_image);
                     if (circleImage != null) {
-                        Glide.with(navigationView.getContext()).load(R.mipmap.meinv).crossFade()
-                                .transform(new GlideCircleTransform(navigationView.getContext()))
-                                .into(circleImage);
+                        ImageLoader.loadRoundRect(
+                                navigationView.getContext(),
+                                R.mipmap.meinv,
+                                new GlideCircleTransform(navigationView.getContext()),
+                                circleImage);
                     }
                 }
             });
@@ -199,15 +213,17 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
     public boolean onNavigationItemSelected(MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.nav_fuli:
-                    startActivity(new Intent(MainActivity.this,MeizhiActivity.class));
+                    startActivity(new Intent(MainActivity.this, MeizhiActivity.class));
                     break;
                 case R.id.nav_one:
-                    startActivity(new Intent(MainActivity.this,OneActivity.class));
+                    startActivity(new Intent(MainActivity.this, OneActivity.class));
                     break;
                 case R.id.nav_setting:
                     startActivity(new Intent(MainActivity.this, SettingActivity.class));
                     break;
-
+                case R.id.nav_about:
+                    startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                    break;
             }
         drawer.closeDrawer(GravityCompat.START);
         return true;

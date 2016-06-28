@@ -1,23 +1,14 @@
 package yyl.yungirl.api;
 
-import com.orhanobut.logger.Logger;
-
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.UnsupportedCharsetException;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
-import okio.Buffer;
-import okio.BufferedSource;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -37,6 +28,32 @@ public class YunRetrofit {
 
     private OkHttpClient mOkHttpClient;
 
+    public synchronized static YunRetrofit getRetrofit() {
+        if (retrofit == null) {
+            retrofit = new YunRetrofit();
+        }
+        return retrofit;
+    }
+
+    private YunRetrofit() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(YunFactory.GANK_HOST)
+                .client(setupOkHttp())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+
+        gankService = retrofit.create(YunApi.class);
+    }
+
+    public YunApi getGankService() {
+        return gankService;
+    }
+
+    /**
+     *  设置OkHttp
+     * @return
+     */
     private OkHttpClient setupOkHttp () {
         if (mOkHttpClient == null) {
             synchronized (YunRetrofit.class) {
@@ -54,30 +71,6 @@ public class YunRetrofit {
             }
         }
         return mOkHttpClient;
-    }
-
-    public synchronized static YunRetrofit getRetrofit() {
-        if (retrofit == null) {
-            retrofit = new YunRetrofit();
-        }
-        return retrofit;
-    }
-
-    private YunRetrofit() {
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(YunFactory.GANK_HOST)
-                .client(setupOkHttp())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
-
-        gankService = retrofit.create(YunApi.class);
-
-    }
-
-    public YunApi getGankService() {
-        return gankService;
     }
 
     /**

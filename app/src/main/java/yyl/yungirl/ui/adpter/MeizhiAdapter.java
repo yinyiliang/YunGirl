@@ -1,4 +1,4 @@
-package yyl.yungirl.adpter;
+package yyl.yungirl.ui.adpter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,12 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
 
 import yyl.yungirl.R;
 import yyl.yungirl.data.bean.Meizhi;
+import yyl.yungirl.util.ImageLoader;
 import yyl.yungirl.widget.MyImageView;
 
 /**
@@ -56,10 +56,7 @@ public class MeizhiAdapter extends RecyclerView.Adapter<MeizhiAdapter.ViewHolder
 
         holder.meizhi = meizhi;
 
-        Glide.with(mContext)
-                .load(meizhi.url)
-                .centerCrop()
-                .into(holder.meizhiView);
+        ImageLoader.loadCenter(mContext, meizhi.url, holder.meizhiView);
 
     }
 

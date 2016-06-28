@@ -6,6 +6,7 @@ import java.util.Date;
 import yyl.yungirl.widget.DailyGankType;
 
 /**
+ * 每日数据
  * Created by Administrator on 2016/6/7 0007.
  */
 public class Gank extends Soul implements Cloneable,Serializable {
@@ -20,8 +21,10 @@ public class Gank extends Soul implements Cloneable,Serializable {
     public boolean used;
     public String who;
 
+    //数据类型判断
+    //是不是类型名
     public boolean isHeader;
-
+    //是不是妹子图资源
     public boolean isGirl() {
         return type.equals(DailyGankType.福利.name());
     }

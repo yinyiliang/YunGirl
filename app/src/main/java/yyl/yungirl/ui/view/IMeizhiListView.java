@@ -3,7 +3,7 @@ package yyl.yungirl.ui.view;
 import java.util.List;
 
 import yyl.yungirl.data.bean.Meizhi;
-import yyl.yungirl.data.bean.Soul;
+import yyl.yungirl.ui.view.base.SwipeRefreshView;
 
 /**
  * Created by yinylinag on 2016/6/7 0007.

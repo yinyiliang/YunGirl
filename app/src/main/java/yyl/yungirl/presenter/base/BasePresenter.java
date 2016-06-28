@@ -1,12 +1,9 @@
-package yyl.yungirl.presenter;
+package yyl.yungirl.presenter.base;
 
-import android.app.Activity;
-
-import yyl.yungirl.ui.view.BaseView;
-import yyl.yungirl.ui.view.IMeizhiListView;
+import yyl.yungirl.ui.view.base.BaseView;
 
 /**
- * Created by Administrator on 2016/6/7 0007.
+ * Created by yinyiliang on 2016/6/7 0007.
  */
 public class BasePresenter<T extends BaseView> implements Presenter<T> {
 

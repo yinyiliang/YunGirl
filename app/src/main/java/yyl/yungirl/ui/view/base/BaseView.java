@@ -1,4 +1,4 @@
-package yyl.yungirl.ui.view;
+package yyl.yungirl.ui.view.base;
 
 import android.view.View;
 

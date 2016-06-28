@@ -4,17 +4,16 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import yyl.yungirl.R;
-import yyl.yungirl.presenter.BasePresenter;
-import yyl.yungirl.ui.activity.base.BaseActivity;
-import yyl.yungirl.ui.view.SwipeRefreshView;
+import yyl.yungirl.presenter.base.BasePresenter;
+import yyl.yungirl.ui.view.base.SwipeRefreshView;
 
 /**
- * Created by Administrator on 2016/6/7 0007.
+ * 下拉刷新上拉加载更多基础Activity
+ * Created by yinyiliang on 2016/6/7 0007.
  */
 public abstract class SwipeRefreshActivity<P extends BasePresenter> extends BaseActivity<P>
         implements SwipeRefreshView {

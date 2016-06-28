@@ -1,13 +1,5 @@
 package yyl.yungirl.widget;
 
-import android.text.format.Formatter;
-import android.util.Log;
-
-import com.orhanobut.logger.Logger;
-
-import java.io.File;
-import java.io.FileInputStream;
-
 import yyl.yungirl.App;
 import yyl.yungirl.util.SystemUtil;
 
@@ -42,7 +34,5 @@ public class YunFactory {
     public static String getCacheControl() {
         return SystemUtil.isConnected(App.mContext) ? CACHE_CONTROL_NETWORK : CACHE_CONTROL_CACHE;
     }
-
-
 
 }
