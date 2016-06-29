@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="YunGirl">
+        <Preference
+            android:key="introduction"
+            android:title="应用介绍"/>
+        <Preference
+            android:key="Star"
+            android:summary="给个Star，鼓励一下作者"
+            android:title="点赞"/>
+        <Preference
+            android:key="enjoy_playing"
+            android:title="打赏"
+            android:summary="请我喝杯咖啡"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="关于作者">
+        <Preference
+            android:key="github"
+            android:title="我的GitHub"
+            android:summary="https://github.com/yinyiliang"/>
+        <Preference
+            android:key="email"
+            android:title="邮箱"
+            android:summary="13642948820@163.com"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="版权">
+        <Preference
+            android:title="数据来源"
+            android:summary="代码家的http://gank.io,以及ONE一个首页数据（侵删）"/>
+    </PreferenceCategory>
+</PreferenceScreen>

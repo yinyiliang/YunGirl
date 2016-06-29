@@ -1,0 +1,53 @@
+[33mcommit 744348ce0a3a6939b053ec53de6cea42b4a51add[m
+Author: naxieyun <497078141@qq.com>
+Date:   Sat Jun 18 23:47:34 2016 +0800
+
+    大图浏览妹子、保存及分享完成
+
+[33mcommit a0696d9c93dc36985118d54fa46b11661f594824[m
+Author: naxieyun <497078141@qq.com>
+Date:   Fri Jun 17 10:32:59 2016 +0800
+
+    添加了点击干货标题打开WebView的点击事件
+
+[33mcommit 41e35046d48fd22f985550b1d9c924d9a4a1163c[m
+Author: naxieyun <497078141@qq.com>
+Date:   Wed Jun 15 11:56:46 2016 +0800
+
+    PopupWindow界面相关
+
+[33mcommit 33fe88e797d64751c5dc9f638a5e6bbaf7afa751[m
+Author: naxieyun <497078141@qq.com>
+Date:   Mon Jun 13 00:46:01 2016 +0800
+
+    初步完成每日资源的显示
+
+[33mcommit 722566a29e70b30a42ae2199f6cdb7f0182b8e91[m
+Author: naxieyun <497078141@qq.com>
+Date:   Mon Jun 13 00:43:28 2016 +0800
+
+    初步完成每日资源的显示
+
+[33mcommit 1621681fea39beb80b98389ee244aad43a2a5c5c[m
+Author: naxieyun <497078141@qq.com>
+Date:   Mon Jun 13 00:06:20 2016 +0800
+
+    完成每日资源的切换
+
+[33mcommit 9b902c27211b09d7b47393e6498753d66686fb79[m
+Author: naxieyun <497078141@qq.com>
+Date:   Sun Jun 12 16:37:12 2016 +0800
+
+    初步完成每日资源的显示
+
+[33mcommit c32df51afccfc6b06a4e57decb0ba4ba0dae2f79[m
+Author: naxieyun <497078141@qq.com>
+Date:   Fri Jun 10 15:49:35 2016 +0800
+
+    完成了看妹子的功能
+
+[33mcommit 75152cbfa2acef72b9b7f28b0a40d30359e36527[m
+Author: naxieyun <497078141@qq.com>
+Date:   Wed Jun 8 23:12:14 2016 +0800
+
+    初步实现了看妹纸图，还差得远呐
