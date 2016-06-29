@@ -2,6 +2,7 @@ package yyl.yungirl.ui.activity;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -193,7 +194,11 @@ public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>
         Meizhi clickMeizhi = mAdapter.getMeizhi(position);
         Intent intent = PictureActivity.intentPictureActivity(MeizhiActivity.this,
                 clickMeizhi.url, clickMeizhi.desc);
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(
-                this,view,YunFactory.TRANSIT_PIC).toBundle());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(
+                    this,view,YunFactory.TRANSIT_PIC).toBundle());
+        } else {
+            startActivity(intent);
+        }
     }
 }

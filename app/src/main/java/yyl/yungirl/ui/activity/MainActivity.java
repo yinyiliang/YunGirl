@@ -2,6 +2,7 @@ package yyl.yungirl.ui.activity;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -279,9 +280,13 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
     public void onItemGirlClick(Gank gank, View position) {
         Intent intent = PictureActivity.intentPictureActivity(MainActivity.this,
                 gank.url, gank.desc);
-        startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(
-                this,
-                position, YunFactory.TRANSIT_PIC).toBundle());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(
+                    this,
+                    position, YunFactory.TRANSIT_PIC).toBundle());
+        } else {
+            startActivity(intent);
+        }
     }
 
     /**

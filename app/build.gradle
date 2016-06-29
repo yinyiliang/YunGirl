@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "yyl.yungirl"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -49,4 +49,5 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
+
 }
