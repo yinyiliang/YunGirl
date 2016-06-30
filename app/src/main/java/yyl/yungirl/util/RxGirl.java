@@ -30,9 +30,7 @@ public class RxGirl {
                 Bitmap bitmap = null;
                 try {
                     bitmap = Glide.with(context).load(url).asBitmap().into(-1,-1).get();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
+                } catch (InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
                 if (bitmap == null) {

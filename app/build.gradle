@@ -10,12 +10,42 @@ android {
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.1"
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            // 自定义输出配置，这里我们加上APK版本号1.0
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        // 输出apk名称为wooyun_v1.0_wandoujia.apk
+                        def fileName = "YunGirl_v${defaultConfig.versionName}_${variant.productFlavors[0].name}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+        }
+    }
+
+    productFlavors {
+        kuan {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "kuan"]
+        }
+        xiaomi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
+        }
+        qh360 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "qh360"]
+        }
+        baidu {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
+        }
+        wandoujia {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
         }
     }
 }
@@ -49,5 +79,9 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
+
+    compile 'com.umeng.analytics:analytics:latest.integration'
+    //检测更新和崩溃分析
+    compile 'im.fir:fir-sdk:latest.integration@aar'
 
 }

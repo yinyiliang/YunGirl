@@ -7,6 +7,7 @@ import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 
+import im.fir.sdk.FIR;
 import yyl.yungirl.util.HintUtil;
 
 /**
@@ -19,6 +20,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        FIR.init(this);
         mContext = this;
         //注册提示工具的context
         HintUtil.register(this);

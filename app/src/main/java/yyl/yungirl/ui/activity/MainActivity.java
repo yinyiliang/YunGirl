@@ -134,7 +134,7 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getData();
+                mPresenter.getDailyData(new Date(System.currentTimeMillis()));
                 mRecyclerView.scrollToPosition(0);
             }
         });

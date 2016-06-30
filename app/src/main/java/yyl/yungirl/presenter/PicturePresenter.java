@@ -71,7 +71,6 @@ public class PicturePresenter extends BasePresenter<PictureView> {
                 .subscribe(new Observer<Uri>() {
                     @Override
                     public void onCompleted() {
-
                     }
 
                     @Override

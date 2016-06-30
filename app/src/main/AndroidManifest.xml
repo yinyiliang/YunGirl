@@ -41,6 +41,16 @@
                   android:screenOrientation="portrait"/>
         <activity android:name=".about.AboutActivity"
                   android:screenOrientation="portrait"/>
+
+        <meta-data android:value="5774b72967e58ee099000130 "
+                   android:name="UMENG_APPKEY"/>
+
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
+
+        <meta-data android:value="f772730972a2736e489f152f1e479a62"
+                   android:name="BUG_HD_SDK_GENERAL_KEY" />
     </application>
 
 </manifest>
