@@ -2,6 +2,12 @@
 
 一个较小的阅读型APP，包含了gank.io的每日干货推荐，妹子图福利、以及ONE一个的每日一句话一幅图。先上图片：
 
+![](http://o9kwn04o6.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_zhengmian.png)
+![](http://o9kwn04o6.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_webview.png)
+![](http://o9kwn04o6.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_drawlayout.png)
+![](http://o9kwn04o6.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_meizilist.png)
+![](http://o9kwn04o6.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_picture.png)
+![](http://o9kwn04o6.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_oneyige.png)
 
 ## 涉及到的知识点有： ##
 
