@@ -21,7 +21,6 @@ public class ImageLoader {
         Glide.with(context).load(url)
                 .thumbnail(0.1f)
                 .error(R.drawable.img_error)
-                .centerCrop()
                 .into(view);
     }
     //图片居中显示加载

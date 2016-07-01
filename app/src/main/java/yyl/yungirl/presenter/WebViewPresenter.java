@@ -72,7 +72,6 @@ public class WebViewPresenter extends BasePresenter<IWebView> {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            Logger.d(url);
             if (url != null) {
                 view.loadUrl(url);
             }

@@ -1,29 +1,37 @@
 package yyl.yungirl.about;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AlertDialog;
 
+import com.pgyersdk.javabean.AppBean;
+import com.pgyersdk.update.PgyUpdateManager;
+import com.pgyersdk.update.UpdateManagerListener;
+import com.squareup.leakcanary.RefWatcher;
+
 import yyl.yungirl.App;
 import yyl.yungirl.R;
+import yyl.yungirl.util.CheckVersion;
+import yyl.yungirl.util.HintUtil;
 import yyl.yungirl.util.SystemUtil;
+import yyl.yungirl.widget.YunFactory;
 
 /**
  * Created by yinyiliang on 2016/6/27 0027.
  */
 public class AboutFragment extends PreferenceFragment implements Preference.OnPreferenceClickListener {
 
-    private final String INTRODUCTION = "introduction";
-    private final String STAR = "Star";
-    private final String ENJOY_PLAYING = "enjoy_playing";
-    private final String GITHUB = "github";
-    private final String EMAIL = "email";
+    private static final String INTRODUCTION = "introduction";
+    private static final String STAR = "Star";
+    private static final String ENJOY_PLAYING = "enjoy_playing";
+    private static final String GITHUB = "github";
+    private static final String EMAIL = "email";
+    private static final String CURRENT_VERSION = "current_version";
 
     private Preference mIntroduction;
+    private Preference mCurrentVersion;
     private Preference mStar;
     private Preference mPlaying;
     private Preference mGitHub;
@@ -43,10 +51,13 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
      */
     private void init() {
         mIntroduction = findPreference(INTRODUCTION);
+        mCurrentVersion = findPreference(CURRENT_VERSION);
         mStar = findPreference(STAR);
         mPlaying = findPreference(ENJOY_PLAYING);
         mGitHub = findPreference(GITHUB);
         mEmail = findPreference(EMAIL);
+
+        mCurrentVersion.setSummary(CheckVersion.getVersion(App.mContext));
 
         //设置点击事件
         mIntroduction.setOnPreferenceClickListener(this);
@@ -75,7 +86,7 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
                     .setPositiveButton("打开", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            useOtherBrowser(getString(R.string.app_xml));
+                            YunFactory.useOtherBrowser(getString(R.string.app_xml));
                         }
                     }).show();
 
@@ -89,20 +100,52 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
                                     SystemUtil.copyToClipBoard(App.mContext,"497078141@qq.com","已经复制到剪切板啦~");
                               }}).show();
         } else if (mGitHub == preference) {
-            useOtherBrowser(getString(R.string.author_github));
+            YunFactory.useOtherBrowser(getString(R.string.author_github));
         } else if (mEmail == preference) {
             SystemUtil.copyToClipBoard(App.mContext,"13642948820@163.com","已经复制到剪切板啦~");
         }
         return false;
     }
 
-    /**
-     * 隐式Intent打开网页
-     * @param s
-     */
-    private void useOtherBrowser(String s) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(s));
-        startActivity(intent);
+    @Override
+    public void onStop() {
+        super.onStop();
+        PgyUpdateManager.unregister();
+    }
+
+    @Override
+    public void onDestroy() {
+        PgyUpdateManager.unregister();
+        super.onDestroy();
+        RefWatcher refWatcher = App.getRefWatcher(getActivity());
+        refWatcher.watch(this);
+    }
+
+
+    private void checkVersion() {
+        PgyUpdateManager.register(getActivity(), new UpdateManagerListener() {
+
+            @Override
+            public void onUpdateAvailable(final String result) {
+
+                // 将新版本信息封装到AppBean中
+                final AppBean appBean = getAppBeanFromString(result);
+                new android.app.AlertDialog.Builder(App.mContext)
+                        .setTitle("更新")
+                        .setMessage("")
+                        .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startDownloadTask(getActivity(), appBean.getDownloadURL());
+                            }
+                        }).show();
+            }
+
+            @Override
+            public void onNoUpdateAvailable() {
+                HintUtil.showToast("已是最新版本了~");
+            }
+        });
     }
 }

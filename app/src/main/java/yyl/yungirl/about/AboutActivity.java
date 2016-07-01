@@ -20,6 +20,8 @@ public class AboutActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setTitle("关于",true);
 
-        getFragmentManager().beginTransaction().replace(R.id.framelayout, new AboutFragment()).commit();
+        if (savedInstanceState == null) {
+            getFragmentManager().beginTransaction().replace(R.id.framelayout, new AboutFragment()).commit();
+        }
     }
 }

@@ -40,4 +40,5 @@ public interface YunApi {
             @Header("Cache-Control") String cacheControl,
             @Query("strDate") String strDate,
             @Query("strRow") int strRow);
+
 }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
-import com.bumptech.glide.Glide;
 
 import yyl.yungirl.App;
 import yyl.yungirl.R;
@@ -18,12 +17,11 @@ import yyl.yungirl.util.SystemUtil;
 public class SettingFragment extends PreferenceFragment implements
         Preference.OnPreferenceClickListener {
 
-    public final String CHANGE_THEME = "change_theme";
-    public final String CLEAR_CACHE = "clear_cache";
+    private static final String CHANGE_THEME = "change_theme";
+    private static final String CLEAR_CACHE = "clear_cache";
 
     private Preference mChangeTheme;
     private Preference mClearCache;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,4 +49,5 @@ public class SettingFragment extends PreferenceFragment implements
         }
         return false;
     }
+
 }

@@ -1,5 +1,8 @@
 package yyl.yungirl.widget;
 
+import android.content.Intent;
+import android.net.Uri;
+
 import yyl.yungirl.App;
 import yyl.yungirl.util.SystemUtil;
 
@@ -14,6 +17,9 @@ public class YunFactory {
     public static final long ONE_DAY_TIME = 1000*60*60*24;
     //共享元素标识
     public static final String TRANSIT_PIC = "picture";
+
+    //fir.im中本应用的ID
+    public static final String API_TOKEN = "f295dea8c29b3cd772e2b3ef5ca0c275";
 
     //Gank的BaseUrl
     public static final String GANK_HOST = "http://gank.io/api/";
@@ -33,6 +39,16 @@ public class YunFactory {
      */
     public static String getCacheControl() {
         return SystemUtil.isConnected(App.mContext) ? CACHE_CONTROL_NETWORK : CACHE_CONTROL_CACHE;
+    }
+
+    /**
+     * 隐式Intent打开网页
+     * @param s
+     */
+    public static void useOtherBrowser(String s) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(s));
+        App.mContext.startActivity(intent);
     }
 
 }

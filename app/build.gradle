@@ -10,7 +10,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0.1"
+        versionName "1.0.3"
     }
     buildTypes {
         release {
@@ -31,6 +31,7 @@ android {
         }
     }
 
+    //友盟多渠道打包
     productFlavors {
         kuan {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "kuan"]
@@ -78,10 +79,11 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
 
     compile 'com.umeng.analytics:analytics:latest.integration'
-    //检测更新和崩溃分析
-    compile 'im.fir:fir-sdk:latest.integration@aar'
 
+    //蒲公英
+    compile 'com.pgyersdk:sdk:2.2.2'
 }

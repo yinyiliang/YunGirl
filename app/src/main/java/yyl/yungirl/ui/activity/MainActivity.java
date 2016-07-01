@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 
 import com.bumptech.glide.Glide;
+import com.pgyersdk.update.PgyUpdateManager;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -86,6 +87,7 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PgyUpdateManager.register(this);
         ButterKnife.bind(this);
         initDatas();
         initViews();

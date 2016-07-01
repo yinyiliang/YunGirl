@@ -12,6 +12,9 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import yyl.yungirl.App;
 import yyl.yungirl.util.HintUtil;
 import yyl.yungirl.util.SystemUtil;
@@ -22,7 +25,7 @@ import yyl.yungirl.widget.YunFactory;
  */
 public class YunRetrofit {
 
-    private YunApi gankService;
+    private YunApi yunService;
 
     private static YunRetrofit retrofit = null;
 
@@ -43,11 +46,11 @@ public class YunRetrofit {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
 
-        gankService = retrofit.create(YunApi.class);
+        yunService = retrofit.create(YunApi.class);
     }
 
     public YunApi getGankService() {
-        return gankService;
+        return yunService;
     }
 
     /**

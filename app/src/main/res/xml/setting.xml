@@ -6,6 +6,7 @@
             android:title="更换主题颜色"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="系统">
+
         <Preference
             android:key="clear_cache"
             android:title="清除缓存"/>

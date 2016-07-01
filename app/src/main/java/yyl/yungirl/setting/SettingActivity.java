@@ -10,6 +10,7 @@ import yyl.yungirl.ui.activity.base.BaseActivity;
  * Created by yinyiliang on 2016/6/27 0027.
  */
 public class SettingActivity extends BaseActivity {
+
     @Override
     protected int getLayout() {
         return R.layout.activity_setting;
@@ -20,6 +21,8 @@ public class SettingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setTitle("设置",true);
 
-        getFragmentManager().beginTransaction().replace(R.id.framelayout, new SettingFragment()).commit();
+        SettingFragment settingFragment = new SettingFragment();
+
+        getFragmentManager().beginTransaction().replace(R.id.framelayout, settingFragment).commit();
     }
 }
