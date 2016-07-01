@@ -39,6 +39,6 @@
 ## 关于作者 ##
 
 邮箱：13642948820@163.com
-微博：http://weibo.com/p/1005052975193192/home?from=page_100505&mod=TAB#place
+微博：http://weibo.com/naxieyun
 
 
