@@ -16,6 +16,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import yyl.yungirl.App;
+import yyl.yungirl.data.bean.YunVersion;
 import yyl.yungirl.util.HintUtil;
 import yyl.yungirl.util.SystemUtil;
 import yyl.yungirl.widget.YunFactory;
@@ -49,7 +50,7 @@ public class YunRetrofit {
         yunService = retrofit.create(YunApi.class);
     }
 
-    public YunApi getGankService() {
+    public YunApi getYunService() {
         return yunService;
     }
 
@@ -104,6 +105,13 @@ public class YunRetrofit {
             }
         }
     };
+
+    public Observable<YunVersion> fetchVersion() {
+        return yunService.getVersion(YunFactory.API_TOKEN)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 
 //    // 打印返回的json数据拦截器
 //    private Interceptor mLoggingInterceptor = new Interceptor() {

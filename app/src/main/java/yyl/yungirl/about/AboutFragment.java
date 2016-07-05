@@ -6,15 +6,9 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AlertDialog;
 
-import com.pgyersdk.javabean.AppBean;
-import com.pgyersdk.update.PgyUpdateManager;
-import com.pgyersdk.update.UpdateManagerListener;
-import com.squareup.leakcanary.RefWatcher;
-
 import yyl.yungirl.App;
 import yyl.yungirl.R;
 import yyl.yungirl.util.CheckVersion;
-import yyl.yungirl.util.HintUtil;
 import yyl.yungirl.util.SystemUtil;
 import yyl.yungirl.widget.YunFactory;
 
@@ -61,6 +55,7 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
 
         //设置点击事件
         mIntroduction.setOnPreferenceClickListener(this);
+        mCurrentVersion.setOnPreferenceClickListener(this);
         mStar.setOnPreferenceClickListener(this);
         mPlaying.setOnPreferenceClickListener(this);
         mGitHub.setOnPreferenceClickListener(this);
@@ -103,49 +98,10 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
             YunFactory.useOtherBrowser(getString(R.string.author_github));
         } else if (mEmail == preference) {
             SystemUtil.copyToClipBoard(App.mContext,"13642948820@163.com","已经复制到剪切板啦~");
+        } else if (mCurrentVersion == preference) {
+            CheckVersion.checkVersion(getActivity(),getView());
         }
         return false;
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        PgyUpdateManager.unregister();
-    }
-
-    @Override
-    public void onDestroy() {
-        PgyUpdateManager.unregister();
-        super.onDestroy();
-        RefWatcher refWatcher = App.getRefWatcher(getActivity());
-        refWatcher.watch(this);
-    }
-
-
-    private void checkVersion() {
-        PgyUpdateManager.register(getActivity(), new UpdateManagerListener() {
-
-            @Override
-            public void onUpdateAvailable(final String result) {
-
-                // 将新版本信息封装到AppBean中
-                final AppBean appBean = getAppBeanFromString(result);
-                new android.app.AlertDialog.Builder(App.mContext)
-                        .setTitle("更新")
-                        .setMessage("")
-                        .setNegativeButton("确定", new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                startDownloadTask(getActivity(), appBean.getDownloadURL());
-                            }
-                        }).show();
-            }
-
-            @Override
-            public void onNoUpdateAvailable() {
-                HintUtil.showToast("已是最新版本了~");
-            }
-        });
-    }
 }

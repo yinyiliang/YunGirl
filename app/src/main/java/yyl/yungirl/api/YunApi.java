@@ -8,6 +8,7 @@ import rx.Observable;
 import yyl.yungirl.data.GankData;
 import yyl.yungirl.data.DateData;
 import yyl.yungirl.data.bean.OneData;
+import yyl.yungirl.data.bean.YunVersion;
 import yyl.yungirl.widget.YunFactory;
 import yyl.yungirl.data.MeizhiData;
 
@@ -40,5 +41,8 @@ public interface YunApi {
             @Header("Cache-Control") String cacheControl,
             @Query("strDate") String strDate,
             @Query("strRow") int strRow);
+
+    @GET("http://api.fir.im/apps/latest/577b70e9f2fc424d93000052")
+    Observable<YunVersion> getVersion(@Query("api_token") String api_token);
 
 }

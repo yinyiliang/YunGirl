@@ -23,8 +23,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 
-import com.bumptech.glide.Glide;
-import com.pgyersdk.update.PgyUpdateManager;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -39,6 +37,7 @@ import yyl.yungirl.data.bean.Gank;
 import yyl.yungirl.presenter.DailyGankPresenter;
 import yyl.yungirl.setting.SettingActivity;
 import yyl.yungirl.ui.activity.base.BaseActivity;
+import yyl.yungirl.util.CheckVersion;
 import yyl.yungirl.util.CustomPopupWindow;
 import yyl.yungirl.ui.view.IDailyView;
 import yyl.yungirl.util.DateUtil;
@@ -87,11 +86,11 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PgyUpdateManager.register(this);
         ButterKnife.bind(this);
         initDatas();
         initViews();
         initDrawer();
+        CheckVersion.checkVersion(this,fab);
     }
 
     @Override

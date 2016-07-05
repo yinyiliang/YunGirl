@@ -40,7 +40,7 @@ public class OnePresenter extends BasePresenter<IOneView> {
     public void loadOneData (final Date date, final int strRow) {
 
         final String strDate = DateUtil.toOneData(date);
-        YunRetrofit.getRetrofit().getGankService()
+        YunRetrofit.getRetrofit().getYunService()
                 .getOne(YunFactory.getCacheControl(), strDate, strRow)
                 .subscribeOn(Schedulers.io())
                 .filter(new Func1<OneData, Boolean>() {

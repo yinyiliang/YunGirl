@@ -54,7 +54,7 @@ public class DailyGankPresenter extends BasePresenter<IDailyView> {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
-        YunRetrofit.getRetrofit().getGankService()
+        YunRetrofit.getRetrofit().getYunService()
                 .getGankData(YunFactory.getCacheControl(), year,month,day)
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<GankData, GankData.Result>() {
@@ -115,7 +115,7 @@ public class DailyGankPresenter extends BasePresenter<IDailyView> {
      */
     public List<String> getDateData() {
 
-        YunRetrofit.getRetrofit().getGankService()
+        YunRetrofit.getRetrofit().getYunService()
                 .getDateData(YunFactory.getCacheControl())
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<DateData, List<String>>() {

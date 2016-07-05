@@ -18,6 +18,7 @@ public class YunFactory {
     //共享元素标识
     public static final String TRANSIT_PIC = "picture";
 
+    public static final String API_TOKEN = "f295dea8c29b3cd772e2b3ef5ca0c275";
     //Gank的BaseUrl
     public static final String GANK_HOST = "http://gank.io/api/";
 

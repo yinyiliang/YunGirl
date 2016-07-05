@@ -7,6 +7,7 @@ import android.preference.PreferenceFragment;
 
 import yyl.yungirl.App;
 import yyl.yungirl.R;
+import yyl.yungirl.TimeRemind.AlarmManagers;
 import yyl.yungirl.util.HintUtil;
 import yyl.yungirl.util.ImageLoader;
 import yyl.yungirl.util.SystemUtil;
@@ -45,6 +46,7 @@ public class SettingFragment extends PreferenceFragment implements
             mClearCache.setSummary(SystemUtil.getAutoFileOrFilesSize(App.mContext.getCacheDir() + "/YunCache"));
             HintUtil.showToast("缓存已清除");
         } else if (mChangeTheme == preference) {
+            AlarmManagers.register(App.mContext);
             HintUtil.showToast("此功能还未完成");
         }
         return false;
