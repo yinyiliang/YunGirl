@@ -198,7 +198,7 @@ public class DailyGankAdapter extends RecyclerView.Adapter<DailyGankAdapter.View
     }
 
     /**
-     * 过滤数组，添加新的分类到数组中
+     * 过滤数组，添加新的header类型到数组中
      * @param data
      */
     private void formatGankData(List<Gank> data) {
@@ -208,7 +208,7 @@ public class DailyGankAdapter extends RecyclerView.Adapter<DailyGankAdapter.View
             Gank gank = data.get(i);
             String header = gank.type;
             if (!gank.isGirl() && !TextUtils.equals(lastHeader, header)) {
-                // Insert new header view.
+                //如果不是妹子图，type类型是第一次出现。就添加这个type名字为一个header
                 Gank gankHeader = gank.clone();
                 lastHeader = header;
                 gankHeader.isHeader = true;

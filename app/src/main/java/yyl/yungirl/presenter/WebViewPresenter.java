@@ -49,7 +49,7 @@ public class WebViewPresenter extends BasePresenter<IWebView> {
         settings.setSupportZoom(true); //支持缩放
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);//支持内容重新布局
         settings.supportMultipleWindows(); //多窗口
-        settings.setAppCacheEnabled(true); //使用APP缓存策略
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE); //不启用缓存功能
         settings.setNeedInitialFocus(true); //当WebView调用requestFocus时为WebView设置节点
         settings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
 

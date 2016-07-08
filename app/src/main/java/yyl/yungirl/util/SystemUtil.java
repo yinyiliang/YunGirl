@@ -59,23 +59,34 @@ public class SystemUtil {
     /**
      * 调用此方法自动计算指定文件或指定文件夹的大小
      *
-     * @param filePath 文件路径
+     * @param filePath1 文件路径
      * @return 计算好的带B、KB、MB、GB的字符串
      */
-    public static String getAutoFileOrFilesSize(String filePath) {
-        File file = new File(filePath);
-        long blockSize = 0;
+    public static String getAutoFileOrFilesSize(String filePath1,String filePath2) {
+        File file1 = new File(filePath1);
+        File file2 = new File(filePath2);
+        long blockSize1 = 0;
+        long blockSize2 = 0;
         try {
-            if (file.isDirectory()) {
-                blockSize = getFileSizes(file);
+            if (file1.isDirectory()) {
+                blockSize1 = getFileSizes(file1);
             }
             else {
-                blockSize = getFileSize(file);
+                blockSize1 = getFileSize(file1);
+            }
+
+            if (file2.isDirectory()) {
+                blockSize2 = getFileSizes(file2);
+            }
+            else {
+                blockSize2 = getFileSize(file2);
             }
         } catch (Exception e) {
             e.printStackTrace();
             Logger.e("获取文件大小失败!");
         }
+
+        long blockSize = blockSize1 + blockSize2;
         return Formatter.formatFileSize(App.mContext,blockSize);
     }
 

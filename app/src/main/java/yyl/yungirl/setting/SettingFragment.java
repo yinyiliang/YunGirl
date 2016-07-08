@@ -32,7 +32,9 @@ public class SettingFragment extends PreferenceFragment implements
         mChangeTheme = findPreference(CHANGE_THEME);
         mClearCache = findPreference(CLEAR_CACHE);
 
-        mClearCache.setSummary(SystemUtil.getAutoFileOrFilesSize(App.mContext.getCacheDir() + "/YunCache"));
+        mClearCache.setSummary(SystemUtil.getAutoFileOrFilesSize(
+                (App.mContext.getCacheDir() + "/YunCache"),
+                (App.mContext.getCacheDir() + "/image_manager_disk_cache")));
 
         mChangeTheme.setOnPreferenceClickListener(this);
         mClearCache.setOnPreferenceClickListener(this);
@@ -43,7 +45,9 @@ public class SettingFragment extends PreferenceFragment implements
         if (mClearCache == preference) {
             SystemUtil.cleanInternalCache(App.mContext);
             ImageLoader.cleanMemory(App.mContext);
-            mClearCache.setSummary(SystemUtil.getAutoFileOrFilesSize(App.mContext.getCacheDir() + "/YunCache"));
+            mClearCache.setSummary(SystemUtil.getAutoFileOrFilesSize(
+                    (App.mContext.getCacheDir() + "/YunCache"),
+                    (App.mContext.getCacheDir() + "/image_manager_disk_cache")));
             HintUtil.showToast("缓存已清除");
         } else if (mChangeTheme == preference) {
             AlarmManagers.register(App.mContext);
