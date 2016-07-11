@@ -6,7 +6,12 @@
             android:title="更换主题颜色"/>
     </PreferenceCategory>
     <PreferenceCategory android:title="系统">
-
+        <CheckBoxPreference
+            android:key="notification"
+            android:title="每日中午提醒"
+            android:summaryOff="已关闭"
+            android:summaryOn="已开启"
+            android:defaultValue="false"/>
         <Preference
             android:key="clear_cache"
             android:title="清除缓存"/>

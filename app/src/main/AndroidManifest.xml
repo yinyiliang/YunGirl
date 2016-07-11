@@ -73,7 +73,9 @@
 
         <receiver android:name=".TimeRemind.AlarmReceiver"
                   tools:ignore="InnerclassSeparator">
-
+            <intent-filter>
+                <action android:name="me.drakeet.meizhi.alarm"/>
+            </intent-filter>
         </receiver>
 
     </application>

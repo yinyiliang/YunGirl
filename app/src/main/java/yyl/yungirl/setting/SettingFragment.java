@@ -20,9 +20,11 @@ public class SettingFragment extends PreferenceFragment implements
 
     private static final String CHANGE_THEME = "change_theme";
     private static final String CLEAR_CACHE = "clear_cache";
+    private static final String NOTIFICATION = "notification";
 
     private Preference mChangeTheme;
     private Preference mClearCache;
+    private Preference mNotification;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class SettingFragment extends PreferenceFragment implements
 
         mChangeTheme = findPreference(CHANGE_THEME);
         mClearCache = findPreference(CLEAR_CACHE);
+        mNotification = findPreference(NOTIFICATION);
 
         mClearCache.setSummary(SystemUtil.getAutoFileOrFilesSize(
                 (App.mContext.getCacheDir() + "/YunCache"),
@@ -38,6 +41,7 @@ public class SettingFragment extends PreferenceFragment implements
 
         mChangeTheme.setOnPreferenceClickListener(this);
         mClearCache.setOnPreferenceClickListener(this);
+        mNotification.setOnPreferenceClickListener(this);
     }
 
     @Override
@@ -50,8 +54,11 @@ public class SettingFragment extends PreferenceFragment implements
                     (App.mContext.getCacheDir() + "/image_manager_disk_cache")));
             HintUtil.showToast("缓存已清除");
         } else if (mChangeTheme == preference) {
-            AlarmManagers.register(App.mContext);
             HintUtil.showToast("此功能还未完成");
+        } else if (mNotification == preference) {
+            if (mNotification.isSelectable()) {
+                AlarmManagers.register(App.mContext);
+            }
         }
         return false;
     }
