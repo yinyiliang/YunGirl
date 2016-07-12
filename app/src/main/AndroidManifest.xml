@@ -74,7 +74,7 @@
         <receiver android:name=".TimeRemind.AlarmReceiver"
                   tools:ignore="InnerclassSeparator">
             <intent-filter>
-                <action android:name="me.drakeet.meizhi.alarm"/>
+                <action android:name="naxieyun.yungir.alarm"/>
             </intent-filter>
         </receiver>
 

@@ -12,6 +12,7 @@ import yyl.yungirl.R;
 import yyl.yungirl.ui.activity.MainActivity;
 
 /**
+ * 广播接收类 以及 通知弹出
  * Created by yinyiliang on 2016/7/5 0005.
  */
 public class AlarmReceiver extends BroadcastReceiver {

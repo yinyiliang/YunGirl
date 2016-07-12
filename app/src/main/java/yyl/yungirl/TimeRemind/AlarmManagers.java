@@ -15,6 +15,7 @@ import java.util.TimeZone;
 import yyl.yungirl.ui.activity.MainActivity;
 
 /**
+ * 定时提醒管理类
  * Created by yinyiliang on 2016/7/5 0005.
  */
 public class AlarmManagers {
@@ -29,7 +30,7 @@ public class AlarmManagers {
 
         Logger.e(String.valueOf(calendar.getTime()));
 
-        Intent intent = new Intent("me.drakeet.meizhi.alarm");
+        Intent intent = new Intent("naxieyun.yungir.alarm");
         intent.setClass(context, AlarmReceiver.class);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(),

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -20,6 +21,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 
@@ -32,6 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import yyl.yungirl.R;
 import yyl.yungirl.about.AboutActivity;
+import yyl.yungirl.listener.HidingScrollListener;
 import yyl.yungirl.ui.adpter.DailyGankAdapter;
 import yyl.yungirl.data.bean.Gank;
 import yyl.yungirl.presenter.DailyGankPresenter;
@@ -123,14 +127,34 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
      */
     private void initViews(){
         setTitle("每日资源",false);
+        setSupportActionBar(toolbar);
+
+        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
+        final int fabBottomMargin = lp.bottomMargin;
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
         mAdapter = new DailyGankAdapter(this,mGankList);
         mAdapter.setItemClick(this);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnScrollListener(new HidingScrollListener() {
+            @Override
+            public void fabHide() {
+                fab.animate()
+                        .translationY(fab.getHeight() +fabBottomMargin )
+                        .setInterpolator(new AccelerateDecelerateInterpolator())
+                        .start();
+            }
 
-        setSupportActionBar(toolbar);
+            @Override
+            public void fabShow() {
+                fab.animate()
+                        .translationY(0)
+                        .setInterpolator(new AccelerateDecelerateInterpolator())
+                        .start();
+            }
+        });
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
