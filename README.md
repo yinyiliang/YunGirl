@@ -16,7 +16,7 @@
 4. Glide的使用，加载网络图片，利用BitmapTransformation实现圆形ImageView头像
 5. MVP架构的实践 减轻Activity的负担，在Presenter中加载数据和界面操作的回调
 6. RecyclerView的多类型Item数据适配
-7. Android4.4及以上版本的使用Toolbar实现透明状态栏（这里还有问题，此方法在华为手机上无法实现透明状态栏。
+7. Android4.4及以上版本的使用Toolbar实现透明状态栏（华为EMUI3.1上无法达成效果。
 8. WebView的使用  进度条的动态加载
 9. 自定义ImageView实现圆角效果
 
