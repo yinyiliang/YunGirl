@@ -10,11 +10,10 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.daimajia.numberprogressbar.NumberProgressBar;
-import com.orhanobut.logger.Logger;
 
 import yyl.yungirl.presenter.base.BasePresenter;
 import yyl.yungirl.ui.view.IWebView;
+import yyl.yungirl.widget.HorizontalProgressBar;
 
 /**
  * Created by yinyiliang on 2016/6/16 0016.
@@ -92,7 +91,7 @@ public class WebViewPresenter extends BasePresenter<IWebView> {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
             super.onProgressChanged(view, newProgress);
-            NumberProgressBar progressBar = getMvpView().getProgressBar();
+            HorizontalProgressBar progressBar = getMvpView().getProgressBar();
             progressBar.setProgress(newProgress);
             if (newProgress == 100) {
                 progressBar.setVisibility(View.GONE);

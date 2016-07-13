@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="progress_unreach_color" format="color"/>
+    <attr name="progress_unreach_height" format="dimension"/>
+    <attr name="progress_reach_color" format="color"/>
+    <attr name="progress_reach_height" format="dimension"/>
+
+    <declare-styleable name="HorizontalProgressBar">
+        <attr name="progress_unreach_color"/>
+        <attr name="progress_unreach_height"/>
+        <attr name="progress_reach_color"/>
+        <attr name="progress_reach_height"/>
+    </declare-styleable>
+</resources>

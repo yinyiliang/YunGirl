@@ -12,8 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
-import com.daimajia.numberprogressbar.NumberProgressBar;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import yyl.yungirl.R;
@@ -22,6 +20,7 @@ import yyl.yungirl.ui.activity.base.BaseActivity;
 import yyl.yungirl.ui.view.IWebView;
 import yyl.yungirl.util.HintUtil;
 import yyl.yungirl.util.SystemUtil;
+import yyl.yungirl.widget.HorizontalProgressBar;
 
 /**
  * Created by yinyiliang on 2016/6/16 0016.
@@ -33,7 +32,8 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements I
     private String myUrl;
     private String myTitle;
 
-    @BindView(R.id.id_progress) NumberProgressBar mProgressBar;
+    @BindView(R.id.id_progress)
+    HorizontalProgressBar mProgressBar;
     @BindView(R.id.id_web_view) WebView mWebView;
 
     private WebViewPresenter mPresenter;
@@ -140,7 +140,7 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements I
     }
 
     @Override
-    public NumberProgressBar getProgressBar() {
+    public HorizontalProgressBar getProgressBar() {
         return mProgressBar;
     }
 
