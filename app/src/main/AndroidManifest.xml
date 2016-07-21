@@ -5,14 +5,14 @@
 
 
     <uses-permission android:name="android.permission.INTERNET"/>  <!-- 网络通信 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> <!-- 读写sdcard，storage等等 -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> <!--1 读写sdcard，storage等等 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>  <!-- 1 -->
     <uses-permission android:name="android.permission.READ_LOGS"/> <!-- 获取logcat日志 -->
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/> <!-- 允许程序录制音频 -->
+    <!--<uses-permission android:name="android.permission.RECORD_AUDIO"/> &lt;!&ndash;1 允许程序录制音频 &ndash;&gt;-->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/> <!-- 获取MAC地址-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/> <!-- 获取网络状态 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/> <!-- 获取设备信息 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/> <!--1 获取设备信息 -->
 
 
     <application
@@ -59,6 +59,8 @@
             android:name=".about.AboutActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.activity.PermissionsActivity"/>
 
         <meta-data android:value="f17c9c8e0fd3dfa388b17266eea8bac6"
                    android:name="BUG_HD_SDK_GENERAL_KEY" />

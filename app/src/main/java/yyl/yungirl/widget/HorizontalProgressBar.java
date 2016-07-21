@@ -18,7 +18,7 @@ public class HorizontalProgressBar extends ProgressBar {
 
     private static final int DEFAULT_UNREACH_COLOR = 0xFFD3D6DA;
     private static final int DEFAULT_UNREACH_HEIGHT = 2;//dp
-    private static final int DEFAULT_REACH_COLOR = 0xffFC00D1;
+    private static final int DEFAULT_REACH_COLOR = 0xffEA5455;
     private static final int DEFAULT_REACH_HEIGHT = 2;//dp
 
     private int mReachColor = DEFAULT_REACH_COLOR;
@@ -69,7 +69,6 @@ public class HorizontalProgressBar extends ProgressBar {
     protected synchronized void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        //int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthVal = MeasureSpec.getSize(widthMeasureSpec);
         int height = measureHeight(heightMeasureSpec);
 

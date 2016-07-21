@@ -9,13 +9,17 @@ import android.support.design.widget.Snackbar;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import yyl.yungirl.BuildConfig;
 import yyl.yungirl.R;
 import yyl.yungirl.ui.adpter.MeizhiAdapter;
 import yyl.yungirl.data.bean.Meizhi;
@@ -176,6 +180,9 @@ public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mRecyclerView != null) {
+            mRecyclerView = null;
+        }
         mPresenter.detachView();
     }
 

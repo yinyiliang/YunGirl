@@ -104,6 +104,7 @@ public class DailyGankPresenter extends BasePresenter<IDailyView> {
         if (results.androidList != null) mGankList.addAll(1,results.androidList);
         if (results.iOSList != null) mGankList.addAll(results.iOSList);
         if (results.appList != null) mGankList.addAll(results.appList);
+        if (results.前端List != null) mGankList.addAll(results.前端List);
         if (results.拓展资源List != null) mGankList.addAll(results.拓展资源List);
         if (results.瞎推荐List != null) mGankList.addAll(results.瞎推荐List);
         return mGankList;
@@ -127,9 +128,15 @@ public class DailyGankPresenter extends BasePresenter<IDailyView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<String>>() {
                     @Override
-                    public void onCompleted() {}
+                    public void onCompleted() {
+
+                    }
+
                     @Override
-                    public void onError(Throwable e) {}
+                    public void onError(Throwable e) {
+
+                    }
+
                     @Override
                     public void onNext(List<String> strings) {
                         mDateList.addAll(strings);

@@ -48,7 +48,6 @@ public class SettingFragment extends PreferenceFragment implements
     public boolean onPreferenceClick(Preference preference) {
         if (mClearCache == preference) {
             SystemUtil.cleanInternalCache(App.mContext);
-            ImageLoader.cleanMemory(App.mContext);
             mClearCache.setSummary(SystemUtil.getAutoFileOrFilesSize(
                     (App.mContext.getCacheDir() + "/YunCache"),
                     (App.mContext.getCacheDir() + "/image_manager_disk_cache")));

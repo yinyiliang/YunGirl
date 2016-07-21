@@ -1,5 +1,6 @@
 package yyl.yungirl.ui.activity;
 
+import android.Manifest;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
@@ -27,6 +28,8 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 
 
+import com.orhanobut.logger.Logger;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,6 +51,7 @@ import yyl.yungirl.util.DateUtil;
 import yyl.yungirl.util.GlideCircleTransform;
 import yyl.yungirl.util.HintUtil;
 import yyl.yungirl.util.ImageLoader;
+import yyl.yungirl.util.PermissionsChecker;
 import yyl.yungirl.widget.YunFactory;
 
 public class MainActivity extends BaseActivity<DailyGankPresenter>
@@ -82,6 +86,16 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
 
     private long exitTime = 0; ////记录第一次点击的时间
 
+    // 所需的全部权限
+    static final String[] PERMISSIONS = new String[]{
+
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE,
+    };
+    private PermissionsChecker mPermissionsChecker; // 权限检测器
+    private static final int REQUEST_CODE = 0; // 请求码
+
     @Override
     protected int getLayout() {
         return R.layout.activity_main;
@@ -95,12 +109,35 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
         initViews();
         initDrawer();
         CheckVersion.checkVersion(this,fab);
+        mPermissionsChecker = new PermissionsChecker(this);
     }
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         getData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // 缺少权限时, 进入权限配置页面
+        if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+            startPermissionsActivity();
+        }
+    }
+
+    private void startPermissionsActivity() {
+        PermissionsActivity.startActivityForResult(this, REQUEST_CODE, PERMISSIONS);
+    }
+
+    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 拒绝时, 关闭页面, 缺少主要权限, 无法运行
+        if (requestCode == REQUEST_CODE && resultCode == PermissionsActivity.PERMISSIONS_DENIED) {
+            finish();
+        }
     }
 
     /**
@@ -119,6 +156,7 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
      */
     public void getData() {
         mPresenter.getDailyData(mCurrentDate);
+        Logger.t("现在时间").e(mCurrentDate+"");
         mDateList = mPresenter.getDateData();
     }
 

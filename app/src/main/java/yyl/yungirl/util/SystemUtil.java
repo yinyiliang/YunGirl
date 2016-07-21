@@ -134,6 +134,7 @@ public class SystemUtil {
      */
     public static void cleanInternalCache(Context context) {
         deleteFilesByDirectory(context.getCacheDir() + "/YunCache");
+        deleteFilesByDirectory(context.getCacheDir() + "/image_manager_disk_cache");
     }
 
     /**

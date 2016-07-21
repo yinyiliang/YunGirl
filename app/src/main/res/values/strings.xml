@@ -38,4 +38,11 @@
 
     <string name="about_app">这是作者继学习Android以来，第一个比较完善的项目，学习参考了很多前辈们的经验，在此感谢！！特别感谢代码家、drakeet、maoruibin、Hugo Xie等等，以及众多开源项目，开源精神万岁~</string>
 
+    <string name="permission">权限(permission)</string>
+    <string name="no_permissions">应用需要必要的运行权限</string>
+
+    <string name="settings">设置</string>
+    <string name="help">帮助</string>
+    <string name="string_help_text">当前应用缺少必要权限。\n\n请点击\"设置\"-\"权限\"-打开所需权限。\n\n最后点击两次后退按钮，即可返回。</string>
+    <string name="quit">退出</string>
 </resources>

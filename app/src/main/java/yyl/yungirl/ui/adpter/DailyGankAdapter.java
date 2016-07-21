@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
@@ -167,6 +168,7 @@ public class DailyGankAdapter extends RecyclerView.Adapter<DailyGankAdapter.View
         @Override
         void bindItem(Context context, final Gank gank) {
             tvTime.setText(DateUtil.toDate(gank.publishedAt));
+            Logger.e(DateUtil.toDate(gank.publishedAt));
 
             ImageLoader.load(context, gank.url, girlPic);
 

@@ -9,6 +9,7 @@ public enum DailyGankType {
     iOS,
     Android,
     App,
+    前端,
     拓展资源,
     瞎推荐,
     休息视频;
