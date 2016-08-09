@@ -99,7 +99,7 @@ public class AboutFragment extends PreferenceFragment implements Preference.OnPr
         } else if (mEmail == preference) {
             SystemUtil.copyToClipBoard(App.mContext,"13642948820@163.com","已经复制到剪切板啦~");
         } else if (mCurrentVersion == preference) {
-            CheckVersion.checkVersion(getActivity(),getView());
+            CheckVersion.checkVersion(getActivity(),getView(),"已经是最新版本");
         }
         return false;
     }

@@ -11,51 +11,56 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/apace_10"
-        android:background="@drawable/one_bg"
-        android:elevation="@dimen/apace_2">
+        android:background="@drawable/one_bg">
 
         <ImageView
             android:id="@+id/iv_one"
             android:layout_width="match_parent"
             android:layout_height="260dp"
-            android:layout_marginTop="@dimen/apace_2"
-            android:layout_marginRight="@dimen/apace_8"
-            android:layout_marginLeft="@dimen/apace_8"
+            android:layout_margin="@dimen/apace_8"
+            android:elevation="@dimen/apace_4"
             tools:src="@color/black"/>
 
-        <TextView
-            android:id="@+id/tv_one_hp_title"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/title_author"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/iv_one"
             android:layout_below="@id/iv_one"
-            android:layout_marginTop="@dimen/apace_5"
-            android:textColor="@color/tingeColor"
-            android:textSize="@dimen/text_size_10"
-            tools:text="VOL1353"/>
+            android:paddingLeft="@dimen/apace_8"
+            android:paddingRight="@dimen/apace_8">
 
-        <TextView
-            android:id="@+id/tv_one_author"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@id/iv_one"
-            android:layout_below="@id/iv_one"
-            android:layout_marginTop="@dimen/apace_5"
-            android:textColor="@color/tingeColor"
-            android:textSize="@dimen/text_size_10"
-            tools:text="最后的晚餐$张凯 作品"/>
+            <TextView
+                android:id="@+id/tv_one_hp_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/apace_5"
+                android:layout_weight="1"
+                android:textColor="@color/tingeColor"
+                android:textSize="@dimen/text_size_14"
+                tools:text="VOL1353"/>
+
+            <TextView
+                android:id="@+id/tv_one_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/apace_5"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textColor="@color/tingeColor"
+                android:textSize="@dimen/text_size_14"
+                tools:text="最后的晚餐$张凯 作品"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_one_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_one_hp_title"
-            android:layout_centerInParent="true"
+            android:layout_below="@+id/title_author"
             android:layout_marginLeft="@dimen/apace_8"
             android:layout_marginRight="@dimen/apace_8"
-            android:layout_marginTop="@dimen/apace_24"
-            android:textSize="@dimen/text_size_16"
+            android:layout_marginTop="29dp"
+            android:gravity="start"
+            android:textSize="@dimen/text_size_18"
             tools:text="过一个平凡无趣的人生太容易了，你可以不读书，不冒险，不运动不写作，不外出，不折腾，但是，人生最后悔的事情就是：我本可以。by 陈素封"/>
 
         <TextView
@@ -64,9 +69,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_margin="@dimen/apace_6"
-            android:textSize="@dimen/text_size_10"
+            android:layout_margin="@dimen/apace_10"
             android:textColor="@color/tingeColor"
+            android:textSize="@dimen/text_size_14"
             tools:text="2016-06-21"/>
 
     </RelativeLayout>

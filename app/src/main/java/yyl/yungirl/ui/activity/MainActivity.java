@@ -88,7 +88,6 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
 
     // 所需的全部权限
     static final String[] PERMISSIONS = new String[]{
-
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE,
@@ -105,11 +104,11 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        mPermissionsChecker = new PermissionsChecker(this);
         initDatas();
         initViews();
         initDrawer();
-        CheckVersion.checkVersion(this,fab);
-        mPermissionsChecker = new PermissionsChecker(this);
+        CheckVersion.checkVersion(this,fab,null);
     }
 
     @Override
@@ -219,7 +218,7 @@ public class MainActivity extends BaseActivity<DailyGankPresenter>
                     if (circleImage != null) {
                         ImageLoader.loadRoundRect(
                                 navigationView.getContext(),
-                                R.mipmap.meinv,
+                                YunFactory.mUrl,
                                 new GlideCircleTransform(navigationView.getContext()),
                                 circleImage);
                     }

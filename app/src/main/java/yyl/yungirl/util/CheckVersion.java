@@ -40,7 +40,7 @@ public class CheckVersion {
         }
     }
 
-    public static void checkVersion(final Context context, final View view) {
+    public static void checkVersion(final Context context, final View view, final String hint) {
         YunRetrofit.getRetrofit().fetchVersion()
                 .subscribe(new Subscriber<YunVersion>() {
                     @Override
@@ -61,7 +61,9 @@ public class CheckVersion {
                             if (currentVersionName.compareTo(firVersionName) < 0) {
                                 showUpdateDialog(yunVersion, context);
                             } else {
-                                HintUtil.showSnackbar(view,"已经是最新版本");
+                                if (hint != null) {
+                                    HintUtil.showSnackbar(view,hint);
+                                }
                             }
                         }
                     }

@@ -34,10 +34,10 @@ public class ImageLoader {
                 .centerCrop()
                 .into(view);
     }
-    //加载显示为圆角图片
-    public static void loadRoundRect(Context context, @DrawableRes int imageRes,
+    //加载显示为圆形图片
+    public static void loadRoundRect(Context context, String url,
                  BitmapTransformation transformation, ImageView view) {
-        Glide.with(context).load(imageRes)
+        Glide.with(context).load(url)
                 .crossFade()
                 .transform(transformation)
                 .into(view);

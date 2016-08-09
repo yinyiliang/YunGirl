@@ -180,9 +180,6 @@ public class MeizhiActivity extends SwipeRefreshActivity<MeizhiListPresenter>
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mRecyclerView != null) {
-            mRecyclerView = null;
-        }
         mPresenter.detachView();
     }
 

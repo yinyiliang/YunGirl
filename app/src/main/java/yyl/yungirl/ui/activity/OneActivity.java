@@ -1,5 +1,7 @@
 package yyl.yungirl.ui.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.orhanobut.logger.Logger;
 
+import java.io.File;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +31,7 @@ import yyl.yungirl.ui.view.IOneView;
 import yyl.yungirl.util.DateUtil;
 import yyl.yungirl.util.HintUtil;
 import yyl.yungirl.util.ImageLoader;
+import yyl.yungirl.util.ScreenUtil;
 
 /**
  * Created by yinyiliang on 2016/6/22 0022.
@@ -67,6 +71,20 @@ public class OneActivity extends BaseActivity<OnePresenter> implements IOneView 
         ButterKnife.bind(this);
         initDatas();
 
+        longTouch();
+    }
+
+    /**
+     * 长按界面触发截图分享功能
+     */
+    private void longTouch() {
+        layout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ScreenUtil.share(OneActivity.this,"what");
+                return true;
+            }
+        });
     }
 
     /**
@@ -160,10 +178,10 @@ public class OneActivity extends BaseActivity<OnePresenter> implements IOneView 
 
     @Override
     public void setUpView(OneData oneData) {
-        ImageLoader.load(this, oneData.hpEntity.strThumbnailUrl, imageOne);
+        ImageLoader.loadCenter(this, oneData.hpEntity.strThumbnailUrl, imageOne);
         hpTitle.setText(oneData.hpEntity.strHpTitle);
         hpAuthor.setText(oneData.hpEntity.strAuthor);
-        oneContent.setText(oneData.hpEntity.strContent);
+        oneContent.setText("\u3000\u3000"+oneData.hpEntity.strContent);
         oneDate.setText(oneData.hpEntity.strMarketTime);
     }
 
