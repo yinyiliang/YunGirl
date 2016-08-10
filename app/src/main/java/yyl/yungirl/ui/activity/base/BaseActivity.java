@@ -30,7 +30,7 @@ import yyl.yungirl.presenter.base.Presenter;
 public abstract class BaseActivity<P extends Presenter> extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+    protected Toolbar mToolbar;
     @BindView(R.id.id_appbar)
     AppBarLayout appBarLayout;
     protected boolean mIsHidden = false;
@@ -40,7 +40,7 @@ public abstract class BaseActivity<P extends Presenter> extends AppCompatActivit
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        //getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         setContentView(getLayout());
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);

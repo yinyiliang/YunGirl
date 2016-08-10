@@ -7,8 +7,6 @@
     android:orientation="vertical"
     tools:context=".ui.activity.MeizhiActivity">
 
-    <include layout="@layout/toolbar"/>
-
     <include layout="@layout/refresh_recyclerview"/>
 
 </android.support.design.widget.CoordinatorLayout>

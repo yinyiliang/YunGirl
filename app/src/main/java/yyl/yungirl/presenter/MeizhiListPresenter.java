@@ -10,22 +10,23 @@ import yyl.yungirl.api.YunRetrofit;
 import yyl.yungirl.data.MeizhiData;
 import yyl.yungirl.data.bean.Meizhi;
 import yyl.yungirl.presenter.base.BasePresenter;
+import yyl.yungirl.ui.view.FuliView;
 import yyl.yungirl.ui.view.IMeizhiListView;
 import yyl.yungirl.widget.YunFactory;
 
 /**
  * Created by yinyiliang on 2016/6/7 0007.
  */
-public class MeizhiListPresenter extends BasePresenter<IMeizhiListView> {
+public class MeizhiListPresenter extends BasePresenter<FuliView> {
 
     private List<Meizhi> mMeizhiList = new ArrayList<>();
 
-    public MeizhiListPresenter(IMeizhiListView mMvpView) {
+    public MeizhiListPresenter(FuliView mMvpView) {
         super(mMvpView);
     }
 
     @Override
-    public void attachView(IMeizhiListView mvpView) {
+    public void attachView(FuliView mvpView) {
         super.attachView(mvpView);
     }
 

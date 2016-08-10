@@ -168,7 +168,7 @@ public class DailyGankAdapter extends RecyclerView.Adapter<DailyGankAdapter.View
         @Override
         void bindItem(Context context, final Gank gank) {
             tvTime.setText(DateUtil.toDate(gank.publishedAt));
-            Logger.e(DateUtil.toDate(gank.publishedAt));
+            //Logger.e(DateUtil.toDate(gank.publishedAt));
 
             ImageLoader.load(context, gank.url, girlPic);
 

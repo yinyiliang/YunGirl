@@ -1,6 +1,5 @@
 package yyl.yungirl.util;
 
-import android.app.Activity;
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -19,8 +18,8 @@ import java.text.ParseException;
 import java.util.List;
 
 import yyl.yungirl.R;
+import yyl.yungirl.ui.activity.fragment.DailyGankFragment;
 import yyl.yungirl.ui.adpter.DateListAdapter;
-import yyl.yungirl.ui.activity.MainActivity;
 
 
 /**
@@ -29,12 +28,12 @@ import yyl.yungirl.ui.activity.MainActivity;
  */
 public class CustomPopupWindow extends PopupWindow {
 
-    private MainActivity mContext;
+    private DailyGankFragment mFragment;
     private List<String> dateList;
     private DateListAdapter mAdapter;
 
-    public CustomPopupWindow(Activity context, List<String> dateList) {
-        this.mContext = (MainActivity) context;
+    public CustomPopupWindow(DailyGankFragment fragment, List<String> dateList) {
+        this.mFragment = fragment;
         this.dateList = dateList;
         init();
     }
@@ -44,13 +43,13 @@ public class CustomPopupWindow extends PopupWindow {
      */
     private void init() {
         // 加载自定义布局文件，转化为组件
-        View view = LayoutInflater.from(mContext).inflate(R.layout.popup_datelist, null);
+        View view = LayoutInflater.from(mFragment.getContext()).inflate(R.layout.popup_datelist, null);
         // 设置显示的view
         setContentView(view);
 
         //初始化控件
         ListView dateListView = (ListView) view.findViewById(R.id.lv_date);
-        mAdapter = new DateListAdapter(mContext, dateList);
+        mAdapter = new DateListAdapter(mFragment.getContext(), dateList);
         dateListView.setAdapter(mAdapter);
 
         //设置Item点击事件
@@ -60,7 +59,7 @@ public class CustomPopupWindow extends PopupWindow {
                 TextView textView = (TextView) view.findViewById(R.id.popup_tv_date);
                 String dayDate = textView.getText().toString();
                 try {
-                    mContext.dateFromPopWindow(dayDate);
+                    mFragment.dateFromPopWindow(dayDate);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -69,7 +68,7 @@ public class CustomPopupWindow extends PopupWindow {
         });
 
         // 设置弹出窗体的高
-        DisplayMetrics metrices = ScreenUtil.getScreenSize(mContext);
+        DisplayMetrics metrices = ScreenUtil.getScreenSize(mFragment.getContext());
         int width = metrices.widthPixels;
         setWidth(2 * width / 3);
         setHeight(2 * width / 3);

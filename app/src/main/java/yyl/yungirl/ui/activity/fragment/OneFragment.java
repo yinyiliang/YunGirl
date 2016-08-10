@@ -1,32 +1,29 @@
-package yyl.yungirl.ui.activity;
+package yyl.yungirl.ui.activity.fragment;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.orhanobut.logger.Logger;
 
-import java.io.File;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import yyl.yungirl.R;
 import yyl.yungirl.data.bean.OneData;
 import yyl.yungirl.presenter.OnePresenter;
-import yyl.yungirl.ui.activity.base.BaseActivity;
 import yyl.yungirl.ui.view.IOneView;
 import yyl.yungirl.util.DateUtil;
 import yyl.yungirl.util.HintUtil;
@@ -34,9 +31,9 @@ import yyl.yungirl.util.ImageLoader;
 import yyl.yungirl.util.ScreenUtil;
 
 /**
- * Created by yinyiliang on 2016/6/22 0022.
+ * Created by yinyiliang on 2016/8/10 0010.
  */
-public class OneActivity extends BaseActivity<OnePresenter> implements IOneView {
+public class OneFragment extends Fragment implements IOneView {
 
     private OnePresenter mPresenter;
 
@@ -58,20 +55,40 @@ public class OneActivity extends BaseActivity<OnePresenter> implements IOneView 
     @BindView(R.id.one_main_content)
     LinearLayout layout;
 
-
     @Override
-    protected int getLayout() {
-        return R.layout.activity_one;
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setTitle("ONE",true);
-        ButterKnife.bind(this);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_one,container,false);
+        ButterKnife.bind(this,view);
         initDatas();
 
         longTouch();
+        return view;
+    }
+
+    @Override
+    public void setUpView(OneData oneData) {
+        ImageLoader.loadCenter(getContext(), oneData.hpEntity.strThumbnailUrl, imageOne);
+        hpTitle.setText(oneData.hpEntity.strHpTitle);
+        hpAuthor.setText(oneData.hpEntity.strAuthor);
+        oneContent.setText("\u3000\u3000"+oneData.hpEntity.strContent);
+        oneDate.setText(oneData.hpEntity.strMarketTime);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getData();
+    }
+
+    private void getData () {
+        mPresenter.loadOneData(mCurrentDate,strRow);
     }
 
     /**
@@ -81,7 +98,7 @@ public class OneActivity extends BaseActivity<OnePresenter> implements IOneView 
         layout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                ScreenUtil.share(OneActivity.this,"what");
+                ScreenUtil.share(getActivity(),"what");
                 return true;
             }
         });
@@ -97,15 +114,9 @@ public class OneActivity extends BaseActivity<OnePresenter> implements IOneView 
     }
 
     @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        getData();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_one,menu);
-        return true;
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.activity_one,menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -120,10 +131,6 @@ public class OneActivity extends BaseActivity<OnePresenter> implements IOneView 
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void getData () {
-        mPresenter.loadOneData(mCurrentDate,strRow);
     }
 
     /**
@@ -175,18 +182,8 @@ public class OneActivity extends BaseActivity<OnePresenter> implements IOneView 
         errorSnackbar.show();
     }
 
-
     @Override
-    public void setUpView(OneData oneData) {
-        ImageLoader.loadCenter(this, oneData.hpEntity.strThumbnailUrl, imageOne);
-        hpTitle.setText(oneData.hpEntity.strHpTitle);
-        hpAuthor.setText(oneData.hpEntity.strAuthor);
-        oneContent.setText("\u3000\u3000"+oneData.hpEntity.strContent);
-        oneDate.setText(oneData.hpEntity.strMarketTime);
-    }
-
-    @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         mPresenter.detachView();
     }
