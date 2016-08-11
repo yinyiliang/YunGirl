@@ -71,14 +71,23 @@ public class MainActivity extends BaseActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setTitle("每日资源");
         ButterKnife.bind(this);
-        mPermissionsChecker = new PermissionsChecker(this);
         initDrawer();
-        mFragmentManager = getSupportFragmentManager(); //打开程序时，主界面显示每日资源
+        init();
+    }
+
+    private void init() {
+        //权限检查
+        mPermissionsChecker = new PermissionsChecker(this);
+        CheckVersion.checkVersion(this,mCoordinatorLayout,null);
+
+        //打开程序时，主界面显示每日资源
+        mFragmentManager = getSupportFragmentManager();
         showFragment(FRAGMENT_DAILY);
         mToolbar.setTitle("每日资源");
-        CheckVersion.checkVersion(this,mCoordinatorLayout,null);
     }
+
 
     @Override
     protected void onResume() {
@@ -173,7 +182,7 @@ public class MainActivity extends BaseActivity implements
     }
 
     /**
-     * 显示Fragment
+     *
      */
     private void showFragment(int index) {
         FragmentTransaction ft = mFragmentManager.beginTransaction();
