@@ -80,9 +80,6 @@ public class WebViewPresenter extends BasePresenter<IWebView> {
         @Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
             super.onReceivedError(view, request, error);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                getMvpView().showErrordescription("╮(╯▽╰)╭！网络出问题了~");
-            }
         }
     }
 
