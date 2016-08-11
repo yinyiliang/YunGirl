@@ -18,11 +18,16 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import yyl.yungirl.R;
 import yyl.yungirl.data.bean.Meizhi;
+import yyl.yungirl.listener.CustomRecyclerOnScrollListener;
 import yyl.yungirl.presenter.MeizhiListPresenter;
 import yyl.yungirl.ui.activity.PictureActivity;
 import yyl.yungirl.ui.activity.base.BaseActivity;
@@ -108,25 +113,26 @@ public class FuliFragment extends Fragment implements FuliView,
         //给每个Item设置点击动画
         mAdapter.setOnItemClickListener(this);
 
-        //设置加载更多时，不用等到数据到底了才加载，给用户一个良好的体验
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mRecyclerView.addOnScrollListener(new CustomRecyclerOnScrollListener(layoutManager) {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                boolean isBottom = layoutManager.findLastCompletelyVisibleItemPosition()
-                        >= mAdapter.getItemCount() - 4;
-                if (!mSwipeRefreshLayout.isRefreshing() && isBottom) {
-                    if (!isFirstTimeTouchBottom) {
-                        mSwipeRefreshLayout.setRefreshing(true);
-                        mPage += 1;
-                        loadData();
-                    } else {
-                        isFirstTimeTouchBottom = false;
-                    }
-                }
+            public void onLoadMore(int currentPage) {
+                LoadMoreData();
+                mSwipeRefreshLayout.setRefreshing(true);
             }
         });
 
+}
+
+    private void LoadMoreData() {
+        Observable.timer(2, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+                .map(new Func1<Long, Object>() {
+                    @Override
+                    public Object call(Long aLong) {
+                        mPage += 1;
+                        loadData();
+                        return null;
+                    }
+                }).subscribe();
     }
 
     /**
