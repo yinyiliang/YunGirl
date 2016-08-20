@@ -58,9 +58,6 @@ public class FuliFragment extends Fragment implements FuliView,
     //默认加载第一页
     private int mPage = 1;
 
-    //是不是第一次到底
-    private boolean isFirstTimeTouchBottom = true;
-
     private boolean mIsRequestDataRefresh = false;
 
     @Nullable

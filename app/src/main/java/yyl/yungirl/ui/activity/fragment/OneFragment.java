@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
@@ -53,7 +54,7 @@ public class OneFragment extends Fragment implements IOneView {
     @BindView(R.id.tv_one_date)
     TextView oneDate;
     @BindView(R.id.one_main_content)
-    LinearLayout layout;
+    RelativeLayout layout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

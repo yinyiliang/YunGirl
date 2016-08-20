@@ -92,6 +92,7 @@ public class DailyGankFragment extends Fragment implements IDailyView, DailyGank
         mCurrentDate = new Date(System.currentTimeMillis());
 
         mDateList = new ArrayList<>();
+        getData();
     }
 
     /**
@@ -141,12 +142,6 @@ public class DailyGankFragment extends Fragment implements IDailyView, DailyGank
         mPresenter.getDailyData(mCurrentDate);
         //Logger.t("现在时间").e(mCurrentDate+"");
         mDateList = mPresenter.getDateData();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        getData();
     }
 
     @Override
